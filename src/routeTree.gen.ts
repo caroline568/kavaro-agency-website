@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiMpesaStkPushRouteImport } from './routes/api/mpesa.stk-push'
+import { Route as ApiMpesaQueryRouteImport } from './routes/api/mpesa.query'
 import { Route as ApiContactSendRouteImport } from './routes/api/contact.send'
 import { Route as ApiContactPaymentConfirmationRouteImport } from './routes/api/contact.payment-confirmation'
 import { Route as ApiBankDetailsRouteImport } from './routes/api/bank.details'
@@ -29,6 +31,16 @@ const ContactRoute = ContactRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMpesaStkPushRoute = ApiMpesaStkPushRouteImport.update({
+  id: '/api/mpesa/stk-push',
+  path: '/api/mpesa/stk-push',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMpesaQueryRoute = ApiMpesaQueryRouteImport.update({
+  id: '/api/mpesa/query',
+  path: '/api/mpesa/query',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiContactSendRoute = ApiContactSendRouteImport.update({
@@ -55,6 +67,8 @@ export interface FileRoutesByFullPath {
   '/api/bank/details': typeof ApiBankDetailsRoute
   '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
+  '/api/mpesa/query': typeof ApiMpesaQueryRoute
+  '/api/mpesa/stk-push': typeof ApiMpesaStkPushRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -63,6 +77,8 @@ export interface FileRoutesByTo {
   '/api/bank/details': typeof ApiBankDetailsRoute
   '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
+  '/api/mpesa/query': typeof ApiMpesaQueryRoute
+  '/api/mpesa/stk-push': typeof ApiMpesaStkPushRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -72,6 +88,8 @@ export interface FileRoutesById {
   '/api/bank/details': typeof ApiBankDetailsRoute
   '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
+  '/api/mpesa/query': typeof ApiMpesaQueryRoute
+  '/api/mpesa/stk-push': typeof ApiMpesaStkPushRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -82,6 +100,8 @@ export interface FileRouteTypes {
     | '/api/bank/details'
     | '/api/contact/payment-confirmation'
     | '/api/contact/send'
+    | '/api/mpesa/query'
+    | '/api/mpesa/stk-push'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -90,6 +110,8 @@ export interface FileRouteTypes {
     | '/api/bank/details'
     | '/api/contact/payment-confirmation'
     | '/api/contact/send'
+    | '/api/mpesa/query'
+    | '/api/mpesa/stk-push'
   id:
     | '__root__'
     | '/'
@@ -98,6 +120,8 @@ export interface FileRouteTypes {
     | '/api/bank/details'
     | '/api/contact/payment-confirmation'
     | '/api/contact/send'
+    | '/api/mpesa/query'
+    | '/api/mpesa/stk-push'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -107,6 +131,8 @@ export interface RootRouteChildren {
   ApiBankDetailsRoute: typeof ApiBankDetailsRoute
   ApiContactPaymentConfirmationRoute: typeof ApiContactPaymentConfirmationRoute
   ApiContactSendRoute: typeof ApiContactSendRoute
+  ApiMpesaQueryRoute: typeof ApiMpesaQueryRoute
+  ApiMpesaStkPushRoute: typeof ApiMpesaStkPushRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,6 +156,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/mpesa/stk-push': {
+      id: '/api/mpesa/stk-push'
+      path: '/api/mpesa/stk-push'
+      fullPath: '/api/mpesa/stk-push'
+      preLoaderRoute: typeof ApiMpesaStkPushRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/mpesa/query': {
+      id: '/api/mpesa/query'
+      path: '/api/mpesa/query'
+      fullPath: '/api/mpesa/query'
+      preLoaderRoute: typeof ApiMpesaQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/contact/send': {
@@ -163,7 +203,19 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBankDetailsRoute: ApiBankDetailsRoute,
   ApiContactPaymentConfirmationRoute: ApiContactPaymentConfirmationRoute,
   ApiContactSendRoute: ApiContactSendRoute,
+  ApiMpesaQueryRoute: ApiMpesaQueryRoute,
+  ApiMpesaStkPushRoute: ApiMpesaStkPushRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
