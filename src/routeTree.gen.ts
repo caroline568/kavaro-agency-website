@@ -13,6 +13,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiContactSendRouteImport } from './routes/api/contact.send'
+import { Route as ApiContactPaymentConfirmationRouteImport } from './routes/api/contact.payment-confirmation'
 import { Route as ApiBankDetailsRouteImport } from './routes/api/bank.details'
 
 const ServicesRoute = ServicesRouteImport.update({
@@ -35,6 +36,12 @@ const ApiContactSendRoute = ApiContactSendRouteImport.update({
   path: '/api/contact/send',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactPaymentConfirmationRoute =
+  ApiContactPaymentConfirmationRouteImport.update({
+    id: '/api/contact/payment-confirmation',
+    path: '/api/contact/payment-confirmation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiBankDetailsRoute = ApiBankDetailsRouteImport.update({
   id: '/api/bank/details',
   path: '/api/bank/details',
@@ -46,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/api/bank/details': typeof ApiBankDetailsRoute
+  '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +61,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/api/bank/details': typeof ApiBankDetailsRoute
+  '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
 }
 export interface FileRoutesById {
@@ -61,6 +70,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/api/bank/details': typeof ApiBankDetailsRoute
+  '/api/contact/payment-confirmation': typeof ApiContactPaymentConfirmationRoute
   '/api/contact/send': typeof ApiContactSendRoute
 }
 export interface FileRouteTypes {
@@ -70,15 +80,23 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/api/bank/details'
+    | '/api/contact/payment-confirmation'
     | '/api/contact/send'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/services' | '/api/bank/details' | '/api/contact/send'
+  to:
+    | '/'
+    | '/contact'
+    | '/services'
+    | '/api/bank/details'
+    | '/api/contact/payment-confirmation'
+    | '/api/contact/send'
   id:
     | '__root__'
     | '/'
     | '/contact'
     | '/services'
     | '/api/bank/details'
+    | '/api/contact/payment-confirmation'
     | '/api/contact/send'
   fileRoutesById: FileRoutesById
 }
@@ -87,6 +105,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
   ApiBankDetailsRoute: typeof ApiBankDetailsRoute
+  ApiContactPaymentConfirmationRoute: typeof ApiContactPaymentConfirmationRoute
   ApiContactSendRoute: typeof ApiContactSendRoute
 }
 
@@ -120,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiContactSendRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/contact/payment-confirmation': {
+      id: '/api/contact/payment-confirmation'
+      path: '/api/contact/payment-confirmation'
+      fullPath: '/api/contact/payment-confirmation'
+      preLoaderRoute: typeof ApiContactPaymentConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/bank/details': {
       id: '/api/bank/details'
       path: '/api/bank/details'
@@ -135,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
   ApiBankDetailsRoute: ApiBankDetailsRoute,
+  ApiContactPaymentConfirmationRoute: ApiContactPaymentConfirmationRoute,
   ApiContactSendRoute: ApiContactSendRoute,
 }
 export const routeTree = rootRouteImport
