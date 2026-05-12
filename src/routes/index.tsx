@@ -89,6 +89,27 @@ function Home() {
         </div>
       </div>
 
+      <section className={styles.vmSec}>
+        <div className={styles.vmImageWrap}>
+          <img src={founderImg} alt="Founder of Kavaro Agency" className={styles.vmImage} loading="lazy" />
+          <div className={styles.vmFounder}>
+            <strong>Kavaro</strong>
+            <span>Founder &amp; Creative Director</span>
+          </div>
+        </div>
+        <div className={styles.vmCards}>
+          <div className="section-label">Who We Are</div>
+          <div className={styles.vmCard}>
+            <h3>Our Vision</h3>
+            <p>To become Africa's most trusted creative and technology partner — empowering ambitious brands to lead their industries through thoughtful design, smart engineering and bold ideas.</p>
+          </div>
+          <div className={styles.vmCard}>
+            <h3>Our Mission</h3>
+            <p>We craft strategic design, scalable web platforms and AI-powered solutions that help businesses look sharper, work smarter and grow faster — combining African creativity with world-class execution.</p>
+          </div>
+        </div>
+      </section>
+
       <section className={styles.section}>
         <div className="section-label">What We Do</div>
         <h2 className={styles.secH}>Services Built for Modern Businesses</h2>
