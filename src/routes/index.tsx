@@ -152,9 +152,9 @@ function Home() {
         </div>
         <div className={styles.vmCards}>
           <div className="section-label">About Kavaro</div>
-          <h2 className={styles.storyH}>A Studio Built on <em>Design</em> &amp; Curiosity</h2>
-          <p className={styles.storyP}>I'm a UI/UX product design graduate currently studying software engineering at Moringa School. Kavaro started while watching my father navigate dialysis — chasing schedules, results and updates in person. Most local services had no digital presence. None.</p>
-          <p className={styles.storyP}>So I started building. Kavaro is a remote studio focused on giving small and growing businesses the kind of digital experience usually reserved for bigger players — done with care, by someone learning and shipping in public.</p>
+          <h2 className={styles.storyH}>An <em>Emerging</em> Studio. Honest Craft. Real Projects.</h2>
+          <p className={styles.storyP}>I'm a UI/UX product design graduate currently studying software engineering at Moringa School — already working with JavaScript, React and Node.js, and going deeper into APIs, databases and full-stack fundamentals. Kavaro started while watching my father navigate dialysis. Most local services had no digital presence. None.</p>
+          <p className={styles.storyP}>So I started building. Kavaro is a remote studio for growing businesses — websites, booking systems, dashboards and AI-enhanced features — done with care, by someone learning fast and shipping in public.</p>
           <div className={styles.vmCard}>
             <h3>Our Vision</h3>
             <p>A world where every growing business — from a Nairobi clinic to a remote-first startup — has a digital experience that genuinely works for the people using it.</p>
