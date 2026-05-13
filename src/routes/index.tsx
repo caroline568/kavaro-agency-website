@@ -183,8 +183,8 @@ function Home() {
 
       <section className={styles.section}>
         <div className="section-label">What We Do</div>
-        <h2 className={styles.secH}>Services for Growing Businesses</h2>
-        <p className={styles.secSub}>Strategic thinking and hands-on craft — delivered as websites, AI tools and brand systems that move the needle.</p>
+        <h2 className={styles.secH}>What Kavaro Can Build for You Today</h2>
+        <p className={styles.secSub}>Real, commercially-useful work at the studio's current stage — websites, booking systems, dashboards, CRUD apps, AI-enhanced features and brand systems.</p>
         <div className={styles.svcGrid}>
           {services.map((s, i) => (
             <div key={s.num} className={`${styles.svcCard} ${hoveredSvc === i ? styles.svcHovered : ''}`}
