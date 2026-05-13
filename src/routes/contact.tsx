@@ -38,7 +38,10 @@ function Contact() {
       <div className="page-hero">
         <div className="section-label">Get in Touch</div>
         <h1>Let's Build Something <em>Together</em></h1>
-        <p>Tell us about your project and we'll get back to you within 24 hours.</p>
+        <p>Kavaro is a 100% remote digital studio. Book a free discovery call or send us a message — we reply within 24 hours.</p>
+        <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="https://calendly.com/kavaro/30min" target="_blank" rel="noreferrer" className="btn-primary">📅 Book a Free 30-min Call</a>
+        </div>
       </div>
 
       <div className={styles.container}>
