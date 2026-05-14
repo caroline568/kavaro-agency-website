@@ -15,6 +15,7 @@ export const Route = createFileRoute('/contact')({
 
 const services = ['UI / UX Design', 'Graphic Design', 'Web Development', 'AI Solutions', 'Brand Identity', 'Digital Marketing', 'Other']
 const budgets = ['Under KES 20,000', 'KES 20,000 – 50,000', 'KES 50,000 – 100,000', 'KES 100,000+', "Let's discuss"]
+const timelines = ['ASAP (rush)', 'Within a few days', '1–2 weeks', '3–4 weeks', '1–2 months', '3+ months', 'Flexible / no rush']
 
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', budget: '', message: '' })
