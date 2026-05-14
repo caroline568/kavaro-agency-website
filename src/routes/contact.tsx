@@ -28,7 +28,7 @@ function Contact() {
     try {
       const res: any = await contactAPI.send(form)
       setStatus({ type: 'success', msg: res.data.message })
-      setForm({ name: '', email: '', phone: '', service: '', budget: '', message: '' })
+      setForm({ name: '', email: '', phone: '', service: '', budget: '', timeline: '', message: '' })
     } catch (err: any) {
       setStatus({ type: 'error', msg: err?.response?.data?.message || err?.message || 'Failed to send. Please try again.' })
     } finally { setLoading(false) }
