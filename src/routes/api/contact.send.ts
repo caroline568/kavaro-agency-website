@@ -11,7 +11,7 @@ export const Route = createFileRoute('/api/contact/send')({
             return Response.json({ success: false, message: 'Name, email and message are required.' }, { status: 400 })
           }
           // Email delivery hook — wire up SMTP/Resend/Postmark here when secrets are configured.
-          console.log('[contact.send]', { name, email, service: body.service, budget: body.budget })
+          console.log('[contact.send]', { name, email, service: body.service, budget: body.budget, timeline: body.timeline })
           return Response.json({
             success: true,
             message: "Thanks! We've received your message and will get back to you within 24 hours.",

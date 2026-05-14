@@ -15,9 +15,10 @@ export const Route = createFileRoute('/contact')({
 
 const services = ['UI / UX Design', 'Graphic Design', 'Web Development', 'AI Solutions', 'Brand Identity', 'Digital Marketing', 'Other']
 const budgets = ['Under KES 20,000', 'KES 20,000 – 50,000', 'KES 50,000 – 100,000', 'KES 100,000+', "Let's discuss"]
+const timelines = ['ASAP (rush)', 'Within a few days', '1–2 weeks', '3–4 weeks', '1–2 months', '3+ months', 'Flexible / no rush']
 
 function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', budget: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', budget: '', timeline: '', message: '' })
   const [status, setStatus] = useState<{ type: 'success' | 'error'; msg: string } | null>(null)
   const [loading, setLoading] = useState(false)
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<any>) => setForm(f => ({ ...f, [k]: e.target.value }))
@@ -27,7 +28,7 @@ function Contact() {
     try {
       const res: any = await contactAPI.send(form)
       setStatus({ type: 'success', msg: res.data.message })
-      setForm({ name: '', email: '', phone: '', service: '', budget: '', message: '' })
+      setForm({ name: '', email: '', phone: '', service: '', budget: '', timeline: '', message: '' })
     } catch (err: any) {
       setStatus({ type: 'error', msg: err?.response?.data?.message || err?.message || 'Failed to send. Please try again.' })
     } finally { setLoading(false) }
@@ -71,12 +72,21 @@ function Contact() {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
-                <label>Budget Range</label>
-                <select value={form.budget} onChange={set('budget')}>
-                  <option value="">Select your budget...</option>
-                  {budgets.map(b => <option key={b} value={b}>{b}</option>)}
-                </select>
+              <div className={styles.row}>
+                <div className="form-group">
+                  <label>Budget Range</label>
+                  <select value={form.budget} onChange={set('budget')}>
+                    <option value="">Select your budget...</option>
+                    {budgets.map(b => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Project Timeline</label>
+                  <select value={form.timeline} onChange={set('timeline')}>
+                    <option value="">When do you need this?</option>
+                    {timelines.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
               </div>
               <div className="form-group">
                 <label>Tell Us About Your Project *</label>
