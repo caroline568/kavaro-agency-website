@@ -54,7 +54,7 @@ function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>(DEFAULT_LEADS);
   const [notes, setNotes] = useState<Note[]>(DEFAULT_NOTES);
   const [bookedCalls, setBookedCalls] = useState<BookedCall[]>([]);
-  const [activeTab, setActiveTab] = useState<"overview" | "inbox" | "notes">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "inbox" | "communications" | "notes">("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [newNote, setNewNote] = useState({ title: "", content: "" });
   const [showNewNoteForm, setShowNewNoteForm] = useState(false);
@@ -245,6 +245,12 @@ function AdminDashboard() {
           Inbox ({stats.newLeads})
         </button>
         <button
+          className={`${styles.tab} ${activeTab === "communications" ? styles.active : ""}`}
+          onClick={() => setActiveTab("communications")}
+        >
+          Communications
+        </button>
+        <button
           className={`${styles.tab} ${activeTab === "notes" ? styles.active : ""}`}
           onClick={() => setActiveTab("notes")}
         >
@@ -405,6 +411,70 @@ function AdminDashboard() {
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* COMMUNICATIONS TAB */}
+      {activeTab === "communications" && (
+        <div className={styles.content}>
+          <div className={styles.communicationsGrid}>
+            {/* Sent Emails Section */}
+            <div className={styles.communicationSection}>
+              <h2>📧 Sent Emails ({stats.sentEmails})</h2>
+              {leads.filter((l) => l.emailSent).length === 0 ? (
+                <p className={styles.emptyState}>No emails sent yet</p>
+              ) : (
+                <div className={styles.emailsList}>
+                  {leads
+                    .filter((l) => l.emailSent)
+                    .map((lead) => (
+                      <div key={lead.id} className={styles.emailCard}>
+                        <div className={styles.emailHeader}>
+                          <strong>{lead.name}</strong>
+                          <span className={styles.emailDate}>{lead.date}</span>
+                        </div>
+                        <p className={styles.emailTo}>{lead.email}</p>
+                        {lead.phone && (
+                          <p className={styles.emailDetail}>
+                            <strong>Phone:</strong> {lead.phone}
+                          </p>
+                        )}
+                        {lead.service && (
+                          <p className={styles.emailDetail}>
+                            <strong>Service Inquiry:</strong> {lead.service}
+                          </p>
+                        )}
+                        <p className={styles.emailMessage}>{lead.message}</p>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+
+            {/* Booked Calls Section */}
+            <div className={styles.communicationSection}>
+              <h2>📅 Calendly Bookings ({stats.bookedCalls})</h2>
+              {bookedCalls.length === 0 ? (
+                <p className={styles.emptyState}>No calls booked yet</p>
+              ) : (
+                <div className={styles.bookedCallsList}>
+                  {[...bookedCalls].reverse().map((call) => (
+                    <div key={call.id} className={styles.bookingCard}>
+                      <div className={styles.bookingDate}>{call.date}</div>
+                      <a href={call.url} target="_blank" rel="noreferrer" className={styles.bookingLink}>
+                        View on Calendly →
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className={styles.calendarLink}>
+                <a href={calendlyUrl} target="_blank" rel="noreferrer" className={styles.primaryLink}>
+                  Open Full Calendly Schedule
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
