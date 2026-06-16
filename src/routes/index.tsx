@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
 });
 const stats = [
   { num: "UI/UX", label: "Design-Led Agency" },
-  { num: "100%", label: "Remote Â· Worldwide" },
+  { num: "100%", label: "Remote-First" },
   { num: "12h", label: "Average Reply Time" },
 ];
 
@@ -152,7 +152,7 @@ const projects = [
       "Farmers often rely on middlemen who reduce their earnings, while institutions like schools and hospitals struggle to access fresh produce directly from reliable suppliers.",
     solution:
       "Built a responsive marketplace interface that connects farmers directly with institutions, focusing on clarity, usability, and smooth product browsing and ordering flow.",
-    tools: ["React", "TypeScript", "Vercel", "Frontend Development"],
+    tools: ["React", "TypeScript", "Vercel"],
     outcome:
       "Live deployed platform demonstrating real-world frontend development, UI structuring, and deployment of a functional marketplace interface.",
     accent: "linear-gradient(135deg, #0f172a, #1e293b)",
@@ -200,7 +200,7 @@ const steps = [
   {
     num: "03",
     title: "Design & Build",
-    desc: "Iterative design and development with weekly check-ins.",
+    desc: "Iterative design and development with regular async updates and check-ins.",
   },
   { num: "04", title: "Revisions", desc: "Two rounds of revisions included on every package." },
   {
@@ -227,23 +227,23 @@ function Home() {
         <div className={styles.heroLeft}>
           <div className={styles.badge}>
             <span className={styles.dot} />
-            <p>Fast-Growing Digital Agency Â· Remote Â· Nairobi</p>
+            <p>Remote Digital Agency Â· Built in Nairobi</p>
           </div>
           <h1>
-            A Fast-Growing Digital Agency Building <em>Websites</em> &amp; Digital Tools
+            A Remote Digital Agency Building <em>Websites</em> &amp; Digital Tools
           </h1>
           <p>
-            Kavaro is an emerging remote agency for growing businesses â€” landing pages, business
-            websites, booking systems, dashboards and AI-enhanced features. Designed by a trained
-            product designer, built with modern tools, shipped honestly.
+            Kavaro is a remote agency for growing businesses â€” landing pages, business websites,
+            booking systems, dashboards and AI-enhanced features. Designed by a trained product
+            designer, built with modern tools, shipped honestly.
           </p>
           <div className={styles.heroBtns}>
-            <button className="btn-primary" onClick={() => setCalendlyOpen(true)}>
-              Book a Call
-            </button>
-            <Link to="/services" className="btn-secondary">
+            <Link to="/services" className="btn-primary">
               Explore Services
             </Link>
+            <button className="btn-secondary" onClick={() => setCalendlyOpen(true)}>
+              Book a Call
+            </button>
           </div>
         </div>
         <div className={styles.heroRight}>
@@ -293,20 +293,13 @@ function Home() {
         <div className={styles.vmCards}>
           <div className="section-label">About Kavaro</div>
           <h2 className={styles.storyH}>
-            This Started With <em>My Dad</em>.
+            This Started With <em>Our Founder's Dad</em>.
           </h2>
           <p className={styles.storyP}>
-            My father was a dialysis patient. For years I watched him travel to the hospital just to
-            book a session, ask a question, get a refill, or confirm a result things a simple
-            website or booking page could have handled in seconds. The clinic had no online
-            presence. The pharmacy had no online presence. Most of the services he depended on had
-            no digital front door at all.
+            Our founder's father was a dialysis patient. For years she watched him travel to the hospital just to book a session, ask a question, get a refill, or confirm a result — things a simple website or booking page could have handled in seconds. The clinic had no online presence. The pharmacy had no online presence. Most of the services he depended on had no digital front door at all.
           </p>
           <p className={styles.storyP}>
-            He has since passed on, but the gap he lived with every day is still here and it's still
-            hurting families like ours. So many local businesses clinics, pharmacies, schools, small
-            service providers are invisible online, and the people who need them suffer for it.
-            Kavaro exists in his memory, to change that one honest website at a time.
+            He has since passed on, but the gap he lived with every day is still here — and it's still hurting families like ours. So many local businesses — clinics, pharmacies, schools, small service providers — are invisible online, and the people who need them suffer for it. Kavaro exists in his memory, to change that one honest website at a time.
           </p>
           <p className={styles.storyP}>
             Iâ€™m a UI/UX Product Designer and Creative Director at Kavaro, currently studying
@@ -324,8 +317,7 @@ function Home() {
           </p>
 
           <p className={styles.storyP}>
-            At Kavaro, we combine design thinking, engineering, and emerging AI capabilities to
-            build practical digital products for real-world businesses.
+            At Kavaro, we combine design thinking, modern engineering and practical AI capabilities to build digital products that genuinely work for the businesses and people using them.
           </p>
           <div className={styles.vmCard}>
             <h3>Our Vision</h3>
@@ -360,25 +352,25 @@ function Home() {
             {
               name: "Caroline Nyawira",
               role: "Founder Â·Creative Director",
-              bio: "Founder of Kavaro Agency. Specializes in web development, AI-powered features, UI/UX design and graphic design.",
+              bio: "Founded Kavaro to close the digital gap for local businesses. Leads product strategy, UI/UX design and client vision — with a background in cybersecurity and generative AI.",
               image: carolineImg,
             },
             {
               name: "Hezron Sande",
               role: "Graphic Designer Â· Web Developer",
-              bio: "Works on graphic design, modern web experiences and UI/UX-focused digital products.",
+              bio: "The visual voice of the team. Brings brand identities and marketing assets to life — from logos to pitch decks — with an eye for detail that makes things feel intentional.",
               image: hezronImg,
             },
             {
               name: "Easton Hans",
               role: "Web Developer Â· UI/UX Designer",
-              bio: "Focused on frontend development and building clean, user-friendly digital interfaces.",
+              bio: "Turns designs into fast, accessible, production-ready code. Specialises in React and component architecture — if it runs in a browser, he cares about how well it runs.",
               image: eastonImg,
             },
             {
               name: "Brenda Chebet",
               role: "Web Developer Â· UI/UX Designer",
-              bio: "Passionate about modern web development and intuitive UI/UX experiences for businesses.",
+              bio: "Bridges design and development — equally comfortable in Figma and a codebase. Brings a user-first perspective to every interface she touches.",
               image: brendaImg,
             },
           ].map((m) => (
@@ -502,8 +494,7 @@ function Home() {
           ))}
         </div>
         <p className={styles.projNote}>
-          * These are concept and case-study projects designed to showcase Kavaro's approach. Real
-          client work and testimonials will appear here as projects ship.
+          Our current portfolio is built from concept projects and case studies. Client work and testimonials are coming soon.
         </p>
       </section>
 

@@ -9,8 +9,8 @@ export default function Footer() {
         <div className={styles.brand}>
           <img src={kavaroLogo} alt="Kavaro Agency logo" className={styles.logoImage} />
           <p className={styles.desc}>
-            A professional creative agency delivering design and development solutions for
-            forward-thinking businesses.
+            A small remote team designing and building honest digital products for growing
+            businesses — one website at a time.
           </p>
           <a href="mailto:hello.kavaro@gmail.com" className={styles.emailLink}>
             hello.kavaro@gmail.com
@@ -32,7 +32,7 @@ export default function Footer() {
               <Link to="/services">AI Solutions</Link>
             </li>
             <li>
-              <Link to="/services">Brand Strategy</Link>
+              <Link to="/services">Brand Basics</Link>
             </li>
           </ul>
         </div>
@@ -44,9 +44,6 @@ export default function Footer() {
             </li>
             <li>
               <Link to="/services">Our Work</Link>
-            </li>
-            <li>
-              <Link to="/contact">Careers</Link>
             </li>
           </ul>
         </div>
@@ -78,10 +75,7 @@ export default function Footer() {
       </div>
       <div className={styles.bottom}>
         <p>&copy; {new Date().getFullYear()} Kavaro Agency. All rights reserved.</p>
-        <p>
-          <a href="#">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-          <a href="#">Terms of Service</a>
-        </p>
+        <p>Remote · Nairobi, Kenya</p>
       </div>
     </footer>
   );

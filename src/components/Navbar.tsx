@@ -11,7 +11,6 @@ export default function Navbar() {
     { to: "/", label: "Home" },
     { to: "/services", label: "Services" },
     { to: "/contact", label: "Contact" },
-    { to: "/admin", label: "Admin" },
   ] as const;
 
   return (

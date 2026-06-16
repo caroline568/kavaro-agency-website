@@ -9,7 +9,16 @@ export const Route = createFileRoute("/services")({
       {
         name: "description",
         content:
-          "UI/UX, graphic design, web development and brand strategy. Transparent pricing in KES and USD.",
+          "UI/UX design, graphic design, web development and AI solutions. Transparent pricing in KES and USD.",
+      },
+      {
+        property: "og:title",
+        content: "Services & Pricing — Kavaro Agency",
+      },
+      {
+        property: "og:description",
+        content:
+          "UI/UX design, graphic design, web development and AI solutions from a remote digital agency in Nairobi.",
       },
     ],
   }),
@@ -49,13 +58,13 @@ const services = [
   {
     num: "03",
     title: "Web Development",
-    desc: "Modern websites built with React and Node.js — landing pages, multi-page business sites, and small web apps. Honest about my level: I write clean front-end code daily and I am actively learning back-end. For complex back-end systems I will tell you upfront.",
+    desc: "Modern websites and web apps built with React and Node.js — landing pages, multi-page business sites, booking systems, dashboards and contact integrations. Every project is built clean, tested across devices, and handed off with documentation.",
     features: [
       "React + Node.js websites",
       "Responsive landing pages",
-      "Contact forms & integrations",
-      "Simple CMS or static content",
-      "Currently learning: APIs, databases & CRUD",
+      "Booking systems & dashboards",
+      "Contact forms & third-party integrations",
+      "Deployment & post-launch support",
     ],
     price: "From KES 12,000",
     usd: "From $90",

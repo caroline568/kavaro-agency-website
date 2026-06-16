@@ -22,8 +22,7 @@ const services = [
   "Graphic Design",
   "Web Development",
   "AI Solutions",
-  "Brand Identity",
-  "Digital Marketing",
+  "Brand Basics",
   "Other",
 ];
 
