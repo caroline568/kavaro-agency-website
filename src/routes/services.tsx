@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { PopupModal, useCalendlyEventListener } from "react-calendly";
 import { supabase } from "@/lib/supabase";
 import styles from "./Services.module.css";
 
@@ -264,20 +266,56 @@ const services: Service[] = [
   },
 ];
 
-function registerBookedCall(calendlyUrl: string) {
+function registerBookedCall(name: string | null, email: string | null, service: string | null, calendlyUrl: string) {
   supabase.from("booked_calls").insert({
-    name: null,
-    email: null,
-    service: null,
+    name,
+    email,
+    service,
     calendly_url: calendlyUrl,
   }).then(() => {});
 }
 
 function Services() {
   const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/hello-kavaro";
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  // Fires when the visitor completes booking on the Calendly popup.
+  // The event payload contains their name and email.
+  useCalendlyEventListener({
+    onEventScheduled: (e) => {
+      // The react-calendly types only expose `uri` on invitee, but the
+      // full payload includes name and email at runtime.
+      const invitee = e.data.payload?.invitee as unknown as {
+        name?: string;
+        email?: string;
+      } | undefined;
+      registerBookedCall(
+        invitee?.name ?? null,
+        invitee?.email ?? null,
+        selectedService,
+        calendlyUrl,
+      );
+      setModalOpen(false);
+    },
+  });
+
+  function openCalendly(serviceName: string) {
+    setSelectedService(serviceName);
+    setModalOpen(true);
+  }
 
   return (
     <main>
+      {typeof window !== "undefined" && (
+        <PopupModal
+          url={calendlyUrl}
+          onModalClose={() => setModalOpen(false)}
+          open={modalOpen}
+          rootElement={document.body}
+        />
+      )}
+
       <div className="page-hero">
         <div className="section-label">Services & Pricing</div>
         <h1>
@@ -325,15 +363,12 @@ function Services() {
                     ))}
                   </ul>
                   <div className={styles.tierActions}>
-                    <a
-                      href={calendlyUrl}
-                      target="_blank"
-                      rel="noreferrer"
+                    <button
                       className="btn-primary"
-                      onClick={() => registerBookedCall(calendlyUrl)}
+                      onClick={() => openCalendly(s.title)}
                     >
                       Book a Call
-                    </a>
+                    </button>
                     <Link to="/contact" className="btn-navy">
                       Get Quote
                     </Link>
