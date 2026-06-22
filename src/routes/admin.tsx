@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState, useCallback } from "react";
+import { supabase, type DbLead, type DbNote, type DbBookedCall } from "@/lib/supabase";
 import styles from "./Admin.module.css";
 
 export const Route = createFileRoute("/admin")({
@@ -12,53 +13,61 @@ export const Route = createFileRoute("/admin")({
   }),
 });
 
-type Lead = {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  service?: string;
-  message: string;
-  date: string;
-  status: "new" | "read" | "replied";
-  emailSent: boolean;
-};
-
-type Note = {
-  id: string;
-  title: string;
-  content: string;
-  date: string;
-};
-
-type BookedCall = {
-  id: string;
-  date: string;
-  url: string;
-  name?: string;
-  email?: string;
-  service?: string;
-};
-
-const DEFAULT_LEADS: Lead[] = [];
-const DEFAULT_NOTES: Note[] = [];
-
-const ADMIN_PASSWORD = "hello@kavaro";
-
-// Calendly admin dashboard — shows your scheduled events, not the public booking page
 const CALENDLY_ADMIN_URL = "https://calendly.com/app/scheduled_events";
+
+// Map DB row -> UI shape
+function mapLead(row: DbLead) {
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    phone: row.phone ?? undefined,
+    service: row.service ?? undefined,
+    message: row.message,
+    date: new Date(row.created_at).toLocaleDateString(),
+    status: row.status,
+    emailSent: row.email_sent,
+  };
+}
+
+function mapNote(row: DbNote) {
+  return {
+    id: row.id,
+    title: row.title,
+    content: row.content,
+    date: new Date(row.created_at).toLocaleDateString(),
+  };
+}
+
+function mapCall(row: DbBookedCall) {
+  return {
+    id: row.id,
+    name: row.name ?? undefined,
+    email: row.email ?? undefined,
+    service: row.service ?? undefined,
+    date: new Date(row.created_at).toLocaleString(),
+    url: row.calendly_url,
+  };
+}
+
+type Lead = ReturnType<typeof mapLead>;
+type Note = ReturnType<typeof mapNote>;
+type Call = ReturnType<typeof mapCall>;
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() =>
-    typeof window !== "undefined" &&
-      sessionStorage.getItem("kavaro_admin_auth") === "true",
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [leads, setLeads] = useState<Lead[]>(DEFAULT_LEADS);
-  const [notes, setNotes] = useState<Note[]>(DEFAULT_NOTES);
-  const [bookedCalls, setBookedCalls] = useState<BookedCall[]>([]);
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [bookedCalls, setBookedCalls] = useState<Call[]>([]);
+  const [dataLoading, setDataLoading] = useState(false);
+
   const [activeTab, setActiveTab] = useState<"overview" | "inbox" | "notes" | "calls">("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "new" | "read" | "replied">("all");
@@ -66,40 +75,107 @@ function AdminDashboard() {
   const [showNewNoteForm, setShowNewNoteForm] = useState(false);
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
 
-  // Load data from localStorage on mount
+  // ── Check existing session on mount ────────────────────────────────────────
   useEffect(() => {
-    if (!isAuthenticated) return;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+      setAuthLoading(false);
+    });
 
-    const storedLeads = localStorage.getItem("kavaro_leads");
-    const storedNotes = localStorage.getItem("kavaro_notes");
-    const storedBookedCalls = localStorage.getItem("kavaro_booked_calls");
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
 
-    if (storedLeads) {
-      try { setLeads(JSON.parse(storedLeads)); } catch { /* ignore */ }
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // ── Load all data once authenticated ───────────────────────────────────────
+  const loadData = useCallback(async () => {
+    setDataLoading(true);
+    const [leadsRes, notesRes, callsRes] = await Promise.all([
+      supabase.from("leads").select("*").order("created_at", { ascending: false }),
+      supabase.from("notes").select("*").order("created_at", { ascending: false }),
+      supabase.from("booked_calls").select("*").order("created_at", { ascending: false }),
+    ]);
+    if (leadsRes.data) setLeads(leadsRes.data.map(mapLead));
+    if (notesRes.data) setNotes(notesRes.data.map(mapNote));
+    if (callsRes.data) setBookedCalls(callsRes.data.map(mapCall));
+    setDataLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) loadData();
+  }, [isAuthenticated, loadData]);
+
+  // ── Auth ───────────────────────────────────────────────────────────────────
+  async function handleLogin(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError(null);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoginError("Incorrect email or password. Please try again.");
+    } else {
+      setEmail("");
+      setPassword("");
     }
-    if (storedNotes) {
-      try { setNotes(JSON.parse(storedNotes)); } catch { /* ignore */ }
+    setLoginLoading(false);
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  }
+
+  // ── Lead mutations ─────────────────────────────────────────────────────────
+  async function handleMarkRead(id: string) {
+    await supabase.from("leads").update({ status: "read" }).eq("id", id);
+    setLeads(leads.map((l) => (l.id === id ? { ...l, status: "read" as const } : l)));
+  }
+
+  async function handleMarkReplied(id: string) {
+    await supabase.from("leads").update({ status: "replied" }).eq("id", id);
+    setLeads(leads.map((l) => (l.id === id ? { ...l, status: "replied" as const } : l)));
+  }
+
+  async function handleDeleteLead(id: string) {
+    await supabase.from("leads").delete().eq("id", id);
+    setLeads(leads.filter((l) => l.id !== id));
+    if (expandedLead === id) setExpandedLead(null);
+  }
+
+  // ── Call mutations ─────────────────────────────────────────────────────────
+  async function handleDeleteCall(id: string) {
+    await supabase.from("booked_calls").delete().eq("id", id);
+    setBookedCalls(bookedCalls.filter((c) => c.id !== id));
+  }
+
+  // ── Note mutations ─────────────────────────────────────────────────────────
+  async function handleAddNote() {
+    if (!newNote.title.trim() || !newNote.content.trim()) {
+      alert("Please fill in both title and content");
+      return;
     }
-    if (storedBookedCalls) {
-      try { setBookedCalls(JSON.parse(storedBookedCalls)); } catch { /* ignore */ }
+    const { data, error } = await supabase
+      .from("notes")
+      .insert({ title: newNote.title.trim(), content: newNote.content.trim() })
+      .select()
+      .single();
+
+    if (!error && data) {
+      setNotes([mapNote(data as DbNote), ...notes]);
+      setNewNote({ title: "", content: "" });
+      setShowNewNoteForm(false);
     }
-  }, [isAuthenticated]);
+  }
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    localStorage.setItem("kavaro_leads", JSON.stringify(leads));
-  }, [leads, isAuthenticated]);
+  async function handleDeleteNote(id: string) {
+    await supabase.from("notes").delete().eq("id", id);
+    setNotes(notes.filter((n) => n.id !== id));
+  }
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    localStorage.setItem("kavaro_notes", JSON.stringify(notes));
-  }, [notes, isAuthenticated]);
-
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    localStorage.setItem("kavaro_booked_calls", JSON.stringify(bookedCalls));
-  }, [bookedCalls, isAuthenticated]);
-
+  // ── Derived stats ──────────────────────────────────────────────────────────
   const stats = {
     totalLeads: leads.length,
     sentEmails: leads.filter((l) => l.emailSent).length,
@@ -109,95 +185,59 @@ function AdminDashboard() {
     bookedCalls: bookedCalls.length,
   };
 
-  const filteredLeads = leads
-    .filter((lead) => {
-      if (statusFilter !== "all" && lead.status !== statusFilter) return false;
-      const query = searchQuery.toLowerCase();
-      return (
-        !query ||
-        lead.name.toLowerCase().includes(query) ||
-        lead.email.toLowerCase().includes(query) ||
-        (lead.service && lead.service.toLowerCase().includes(query)) ||
-        lead.message.toLowerCase().includes(query)
-      );
-    })
-    // newest first
-    .sort((a, b) => Number(b.id) - Number(a.id));
+  const filteredLeads = leads.filter((lead) => {
+    if (statusFilter !== "all" && lead.status !== statusFilter) return false;
+    const query = searchQuery.toLowerCase();
+    return (
+      !query ||
+      lead.name.toLowerCase().includes(query) ||
+      lead.email.toLowerCase().includes(query) ||
+      (lead.service && lead.service.toLowerCase().includes(query)) ||
+      lead.message.toLowerCase().includes(query)
+    );
+  });
 
-  function handleMarkRead(id: string) {
-    setLeads(leads.map((l) => (l.id === id ? { ...l, status: "read" as const } : l)));
+  // ── Loading state ──────────────────────────────────────────────────────────
+  if (authLoading) {
+    return (
+      <main className={styles.admin}>
+        <div className={styles.loginCard}>
+          <p style={{ textAlign: "center", color: "#64748b" }}>Loading...</p>
+        </div>
+      </main>
+    );
   }
 
-  function handleMarkReplied(id: string) {
-    setLeads(leads.map((l) => (l.id === id ? { ...l, status: "replied" as const } : l)));
-  }
-
-  function handleDeleteLead(id: string) {
-    setLeads(leads.filter((l) => l.id !== id));
-    if (expandedLead === id) setExpandedLead(null);
-  }
-
-  function handleDeleteCall(id: string) {
-    setBookedCalls(bookedCalls.filter((c) => c.id !== id));
-  }
-
-  function handleAddNote() {
-    if (!newNote.title.trim() || !newNote.content.trim()) {
-      alert("Please fill in both title and content");
-      return;
-    }
-    const note: Note = {
-      id: Date.now().toString(),
-      title: newNote.title,
-      content: newNote.content,
-      date: new Date().toLocaleDateString(),
-    };
-    setNotes([note, ...notes]);
-    setNewNote({ title: "", content: "" });
-    setShowNewNoteForm(false);
-  }
-
-  function handleDeleteNote(id: string) {
-    setNotes(notes.filter((n) => n.id !== id));
-  }
-
-  function handleLogin(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem("kavaro_admin_auth", "true");
-      setIsAuthenticated(true);
-      setLoginError(null);
-      setPassword("");
-      return;
-    }
-    setLoginError("Incorrect password. Please try again.");
-  }
-
-  function handleLogout() {
-    sessionStorage.removeItem("kavaro_admin_auth");
-    setIsAuthenticated(false);
-    navigate({ to: "/" });
-  }
-
+  // ── Login form ─────────────────────────────────────────────────────────────
   if (!isAuthenticated) {
     return (
       <main className={styles.admin}>
         <div className={styles.loginCard}>
           <h1>Admin Login</h1>
-          <p>Enter the password to access the dashboard.</p>
+          <p>Sign in with your Kavaro admin account.</p>
           <form onSubmit={handleLogin} className={styles.loginForm}>
+            <label htmlFor="adminEmail">Email</label>
+            <input
+              id="adminEmail"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="hello.kavaro@gmail.com"
+              autoFocus
+              required
+            />
             <label htmlFor="adminPassword">Password</label>
             <input
               id="adminPassword"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter admin password"
-              autoFocus
+              placeholder="Your password"
+              required
             />
             {loginError && <p className={styles.loginError}>{loginError}</p>}
-            <button type="submit" className={styles.btnSave}>
-              Unlock Dashboard
+            <button type="submit" className={styles.btnSave} disabled={loginLoading}>
+              {loginLoading ? "Signing in..." : "Unlock Dashboard"}
             </button>
           </form>
         </div>
@@ -205,6 +245,7 @@ function AdminDashboard() {
     );
   }
 
+  // ── Dashboard ──────────────────────────────────────────────────────────────
   return (
     <main className={styles.admin}>
       <div className={styles.header}>
@@ -213,7 +254,7 @@ function AdminDashboard() {
           <p>Manage inquiries, booked calls, and project notes</p>
         </div>
         <button className={styles.logoutBtn} onClick={handleLogout}>
-          ← Logout
+          Logout
         </button>
       </div>
 
@@ -244,377 +285,384 @@ function AdminDashboard() {
         </button>
       </div>
 
-      {/* ── OVERVIEW TAB ── */}
-      {activeTab === "overview" && (
+      {dataLoading ? (
         <div className={styles.content}>
-          <div className={styles.statsGrid}>
-            <div className={styles.statCard}>
-              <div className={styles.statLabel}>Total Leads</div>
-              <div className={styles.statValue}>{stats.totalLeads}</div>
-            </div>
-            <div className={`${styles.statCard} ${styles.statNew}`}>
-              <div className={styles.statLabel}>New</div>
-              <div className={styles.statValue}>{stats.newLeads}</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statLabel}>Read</div>
-              <div className={styles.statValue}>{stats.readLeads}</div>
-            </div>
-            <div className={`${styles.statCard} ${styles.statReplied}`}>
-              <div className={styles.statLabel}>Replied</div>
-              <div className={styles.statValue}>{stats.repliedLeads}</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statLabel}>Emails Sent</div>
-              <div className={styles.statValue}>{stats.sentEmails}</div>
-            </div>
-            <div className={`${styles.statCard} ${styles.statCalls}`}>
-              <div className={styles.statLabel}>Booked Calls</div>
-              <div className={styles.statValue}>{stats.bookedCalls}</div>
-            </div>
-          </div>
-
-          {/* Recent inquiries — richer preview */}
-          <div className={styles.recentLeads}>
-            <div className={styles.sectionHeadRow}>
-              <h2>Recent Inquiries</h2>
-              {leads.length > 0 && (
-                <button className={styles.viewAll} onClick={() => setActiveTab("inbox")}>
-                  View all →
-                </button>
-              )}
-            </div>
-            {leads.length === 0 ? (
-              <p className={styles.emptyState}>No inquiries yet</p>
-            ) : (
-              <div className={styles.leadsList}>
-                {[...leads].sort((a, b) => Number(b.id) - Number(a.id)).slice(0, 5).map((lead) => (
-                  <div key={lead.id} className={`${styles.leadItem} ${styles[lead.status]}`}>
-                    <div className={styles.leadItemLeft}>
-                      <div className={styles.leadItemMeta}>
-                        <strong>{lead.name}</strong>
-                        <span className={`${styles.statusPill} ${styles[`pill_${lead.status}`]}`}>
-                          {lead.status}
-                        </span>
-                        {lead.emailSent && (
-                          <span className={styles.emailSentBadge}>✉ sent</span>
-                        )}
-                      </div>
-                      <a href={`mailto:${lead.email}`} className={styles.leadEmail}>
-                        {lead.email}
-                      </a>
-                      <div className={styles.leadTags}>
-                        {lead.service && <span className={styles.service}>{lead.service}</span>}
-                        {lead.phone && (
-                          <a href={`tel:${lead.phone}`} className={styles.phoneTag}>
-                            📞 {lead.phone}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                    <div className={styles.leadItemRight}>
-                      <div className={styles.date}>{lead.date}</div>
-                      <a href={`mailto:${lead.email}?subject=Re: Your Kavaro Inquiry`} className={styles.replyLink}>
-                        Reply →
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Calendly section — links to YOUR admin dashboard, not the public booking page */}
-          <div className={styles.calendarOverview}>
-            <div className={styles.calHeader}>
-              <div>
-                <h2>Calendly — Scheduled Events</h2>
-                <p>
-                  Open your Calendly dashboard to see all upcoming and past discovery calls booked
-                  by clients.
-                </p>
-              </div>
-              <a
-                href={CALENDLY_ADMIN_URL}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.scheduleLink}
-              >
-                📅 Open My Calendly Dashboard
-              </a>
-            </div>
-
-            {bookedCalls.length > 0 && (
-              <div className={styles.bookedCallsPreview}>
-                <div className={styles.sectionHeadRow}>
-                  <h3>Recent Site Bookings</h3>
-                  <button className={styles.viewAll} onClick={() => setActiveTab("calls")}>
-                    View all →
-                  </button>
-                </div>
-                <ul>
-                  {[...bookedCalls].reverse().slice(0, 3).map((call) => (
-                    <li key={call.id} className={styles.callPreviewItem}>
-                      <div className={styles.callPreviewLeft}>
-                        <strong>{call.name || "Anonymous"}</strong>
-                        {call.email && (
-                          <a href={`mailto:${call.email}`} className={styles.callEmail}>
-                            {call.email}
-                          </a>
-                        )}
-                        {call.service && <span className={styles.service}>{call.service}</span>}
-                      </div>
-                      <div className={styles.date}>{call.date}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          <p className={styles.emptyState}>Loading data...</p>
         </div>
-      )}
+      ) : (
+        <>
+          {/* ── OVERVIEW TAB ── */}
+          {activeTab === "overview" && (
+            <div className={styles.content}>
+              <div className={styles.statsGrid}>
+                <div className={styles.statCard}>
+                  <div className={styles.statLabel}>Total Leads</div>
+                  <div className={styles.statValue}>{stats.totalLeads}</div>
+                </div>
+                <div className={`${styles.statCard} ${styles.statNew}`}>
+                  <div className={styles.statLabel}>New</div>
+                  <div className={styles.statValue}>{stats.newLeads}</div>
+                </div>
+                <div className={styles.statCard}>
+                  <div className={styles.statLabel}>Read</div>
+                  <div className={styles.statValue}>{stats.readLeads}</div>
+                </div>
+                <div className={`${styles.statCard} ${styles.statReplied}`}>
+                  <div className={styles.statLabel}>Replied</div>
+                  <div className={styles.statValue}>{stats.repliedLeads}</div>
+                </div>
+                <div className={styles.statCard}>
+                  <div className={styles.statLabel}>Emails Sent</div>
+                  <div className={styles.statValue}>{stats.sentEmails}</div>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCalls}`}>
+                  <div className={styles.statLabel}>Booked Calls</div>
+                  <div className={styles.statValue}>{stats.bookedCalls}</div>
+                </div>
+              </div>
 
-      {/* ── INBOX TAB ── */}
-      {activeTab === "inbox" && (
-        <div className={styles.content}>
-          <div className={styles.inboxControls}>
-            <input
-              type="text"
-              className={styles.searchInput}
-              placeholder="Search by name, email, service, or message..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <div className={styles.filterTabs}>
-              {(["all", "new", "read", "replied"] as const).map((f) => (
-                <button
-                  key={f}
-                  className={`${styles.filterBtn} ${statusFilter === f ? styles.filterActive : ""}`}
-                  onClick={() => setStatusFilter(f)}
-                >
-                  {f === "all" ? `All (${leads.length})` : `${f} (${leads.filter((l) => l.status === f).length})`}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {filteredLeads.length === 0 ? (
-            <p className={styles.emptyState}>
-              {searchQuery || statusFilter !== "all" ? "No matching inquiries" : "No inquiries yet"}
-            </p>
-          ) : (
-            <div className={styles.inboxList}>
-              {filteredLeads.map((lead) => {
-                const isExpanded = expandedLead === lead.id;
-                return (
-                  <div key={lead.id} className={`${styles.inboxCard} ${styles[lead.status]}`}>
-                    <div
-                      className={styles.cardHeader}
-                      onClick={() => setExpandedLead(isExpanded ? null : lead.id)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div className={styles.cardHeaderLeft}>
-                        <h3>{lead.name}</h3>
-                        <div className={styles.cardMeta}>
-                          <a
-                            href={`mailto:${lead.email}`}
-                            className={styles.email}
-                            onClick={(e) => e.stopPropagation()}
-                          >
+              <div className={styles.recentLeads}>
+                <div className={styles.sectionHeadRow}>
+                  <h2>Recent Inquiries</h2>
+                  {leads.length > 0 && (
+                    <button className={styles.viewAll} onClick={() => setActiveTab("inbox")}>
+                      View all
+                    </button>
+                  )}
+                </div>
+                {leads.length === 0 ? (
+                  <p className={styles.emptyState}>No inquiries yet</p>
+                ) : (
+                  <div className={styles.leadsList}>
+                    {leads.slice(0, 5).map((lead) => (
+                      <div key={lead.id} className={`${styles.leadItem} ${styles[lead.status]}`}>
+                        <div className={styles.leadItemLeft}>
+                          <div className={styles.leadItemMeta}>
+                            <strong>{lead.name}</strong>
+                            <span className={`${styles.statusPill} ${styles[`pill_${lead.status}`]}`}>
+                              {lead.status}
+                            </span>
+                            {lead.emailSent && (
+                              <span className={styles.emailSentBadge}>email sent</span>
+                            )}
+                          </div>
+                          <a href={`mailto:${lead.email}`} className={styles.leadEmail}>
                             {lead.email}
                           </a>
-                          {lead.phone && (
-                            <a
-                              href={`tel:${lead.phone}`}
-                              className={styles.phoneLink}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              📞 {lead.phone}
-                            </a>
-                          )}
-                        </div>
-                        {lead.service && (
-                          <span className={styles.service}>{lead.service}</span>
-                        )}
-                      </div>
-                      <div className={styles.cardHeaderRight}>
-                        <span className={`${styles.statusBadge} ${styles[`badge_${lead.status}`]}`}>
-                          {lead.status}
-                        </span>
-                        {lead.emailSent && (
-                          <span className={styles.emailSentBadge}>✉ email sent</span>
-                        )}
-                        <span className={styles.date}>{lead.date}</span>
-                        <span className={styles.expandIcon}>{isExpanded ? "▲" : "▼"}</span>
-                      </div>
-                    </div>
-
-                    {isExpanded && (
-                      <>
-                        <div className={styles.messageBlock}>
-                          <span className={styles.messageLabel}>Message</span>
-                          <p className={styles.messageText}>{lead.message}</p>
-                        </div>
-
-                        <div className={styles.cardFooter}>
-                          <a
-                            href={`mailto:${lead.email}?subject=Re: Your Kavaro Inquiry`}
-                            className={`${styles.btn} ${styles.btnEmail}`}
-                          >
-                            ✉ Reply by Email
-                          </a>
-                          <div className={styles.actions}>
-                            {lead.status === "new" && (
-                              <button
-                                className={`${styles.btn} ${styles.btnRead}`}
-                                onClick={() => handleMarkRead(lead.id)}
-                              >
-                                Mark Read
-                              </button>
+                          <div className={styles.leadTags}>
+                            {lead.service && <span className={styles.service}>{lead.service}</span>}
+                            {lead.phone && (
+                              <a href={`tel:${lead.phone}`} className={styles.phoneTag}>
+                                {lead.phone}
+                              </a>
                             )}
-                            {lead.status !== "replied" && (
-                              <button
-                                className={`${styles.btn} ${styles.btnReplied}`}
-                                onClick={() => handleMarkReplied(lead.id)}
-                              >
-                                Mark Replied
-                              </button>
-                            )}
-                            <button
-                              className={`${styles.btn} ${styles.btnDelete}`}
-                              onClick={() => handleDeleteLead(lead.id)}
-                            >
-                              Delete
-                            </button>
                           </div>
                         </div>
-                      </>
-                    )}
+                        <div className={styles.leadItemRight}>
+                          <div className={styles.date}>{lead.date}</div>
+                          <a
+                            href={`mailto:${lead.email}?subject=Re: Your Kavaro Inquiry`}
+                            className={styles.replyLink}
+                          >
+                            Reply
+                          </a>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
+                )}
+              </div>
 
-      {/* ── BOOKED CALLS TAB ── */}
-      {activeTab === "calls" && (
-        <div className={styles.content}>
-          <div className={styles.callsHeader}>
-            <div>
-              <h2>Booked Discovery Calls</h2>
-              <p className={styles.callsSubtitle}>
-                These are clients who clicked the Calendly link on your site. Open your Calendly
-                dashboard to confirm actual scheduled times.
-              </p>
-            </div>
-            <a
-              href={CALENDLY_ADMIN_URL}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.scheduleLink}
-            >
-              📅 Open Calendly Dashboard
-            </a>
-          </div>
-
-          {bookedCalls.length === 0 ? (
-            <p className={styles.emptyState}>No booked calls recorded yet</p>
-          ) : (
-            <div className={styles.callsList}>
-              {[...bookedCalls].reverse().map((call) => (
-                <div key={call.id} className={styles.callCard}>
-                  <div className={styles.callCardLeft}>
-                    <div className={styles.callAvatar}>
-                      {(call.name || "?")[0].toUpperCase()}
-                    </div>
-                    <div className={styles.callInfo}>
-                      <strong className={styles.callName}>{call.name || "Anonymous visitor"}</strong>
-                      {call.email ? (
-                        <a href={`mailto:${call.email}?subject=Your Discovery Call — Kavaro`} className={styles.callEmailLink}>
-                          {call.email}
-                        </a>
-                      ) : (
-                        <span className={styles.callNoEmail}>No email captured</span>
-                      )}
-                      {call.service && (
-                        <span className={styles.service}>{call.service}</span>
-                      )}
-                    </div>
+              <div className={styles.calendarOverview}>
+                <div className={styles.calHeader}>
+                  <div>
+                    <h2>Calendly — Scheduled Events</h2>
+                    <p>Open your Calendly dashboard to see all upcoming discovery calls.</p>
                   </div>
-                  <div className={styles.callCardRight}>
-                    <span className={styles.callDate}>{call.date}</span>
-                    <button
-                      className={`${styles.btn} ${styles.btnDelete}`}
-                      onClick={() => handleDeleteCall(call.id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
+                  <a
+                    href={CALENDLY_ADMIN_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.scheduleLink}
+                  >
+                    Open Calendly Dashboard
+                  </a>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── NOTES TAB ── */}
-      {activeTab === "notes" && (
-        <div className={styles.content}>
-          <div className={styles.notesHeader}>
-            <h2>Project Notes</h2>
-            <button
-              className={styles.btnNew}
-              onClick={() => setShowNewNoteForm(!showNewNoteForm)}
-            >
-              {showNewNoteForm ? "Cancel" : "+ New Note"}
-            </button>
-          </div>
-
-          {showNewNoteForm && (
-            <div className={styles.noteForm}>
-              <input
-                type="text"
-                placeholder="Note title..."
-                value={newNote.title}
-                onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-                className={styles.noteTitle}
-              />
-              <textarea
-                placeholder="Write your note here..."
-                value={newNote.content}
-                onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-                rows={6}
-              />
-              <button className={styles.btnSave} onClick={handleAddNote}>
-                Save Note
-              </button>
-            </div>
-          )}
-
-          {notes.length === 0 ? (
-            <p className={styles.emptyState}>No notes yet</p>
-          ) : (
-            <div className={styles.notesList}>
-              {notes.map((note) => (
-                <div key={note.id} className={styles.noteCard}>
-                  <div className={styles.noteHeader}>
-                    <h3>{note.title}</h3>
-                    <button
-                      className={styles.btnDelete}
-                      onClick={() => handleDeleteNote(note.id)}
-                    >
-                      Delete
-                    </button>
+                {bookedCalls.length > 0 && (
+                  <div className={styles.bookedCallsPreview}>
+                    <div className={styles.sectionHeadRow}>
+                      <h3>Recent Site Bookings</h3>
+                      <button className={styles.viewAll} onClick={() => setActiveTab("calls")}>
+                        View all
+                      </button>
+                    </div>
+                    <ul>
+                      {bookedCalls.slice(0, 3).map((call) => (
+                        <li key={call.id} className={styles.callPreviewItem}>
+                          <div className={styles.callPreviewLeft}>
+                            <strong>{call.name || "Anonymous"}</strong>
+                            {call.email && (
+                              <a href={`mailto:${call.email}`} className={styles.callEmail}>
+                                {call.email}
+                              </a>
+                            )}
+                            {call.service && <span className={styles.service}>{call.service}</span>}
+                          </div>
+                          <div className={styles.date}>{call.date}</div>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className={styles.noteContent}>{note.content}</p>
-                  <p className={styles.noteDate}>{note.date}</p>
-                </div>
-              ))}
+                )}
+              </div>
             </div>
           )}
-        </div>
+
+          {/* ── INBOX TAB ── */}
+          {activeTab === "inbox" && (
+            <div className={styles.content}>
+              <div className={styles.inboxControls}>
+                <input
+                  type="text"
+                  className={styles.searchInput}
+                  placeholder="Search by name, email, service, or message..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <div className={styles.filterTabs}>
+                  {(["all", "new", "read", "replied"] as const).map((f) => (
+                    <button
+                      key={f}
+                      className={`${styles.filterBtn} ${statusFilter === f ? styles.filterActive : ""}`}
+                      onClick={() => setStatusFilter(f)}
+                    >
+                      {f === "all"
+                        ? `All (${leads.length})`
+                        : `${f} (${leads.filter((l) => l.status === f).length})`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {filteredLeads.length === 0 ? (
+                <p className={styles.emptyState}>
+                  {searchQuery || statusFilter !== "all" ? "No matching inquiries" : "No inquiries yet"}
+                </p>
+              ) : (
+                <div className={styles.inboxList}>
+                  {filteredLeads.map((lead) => {
+                    const isExpanded = expandedLead === lead.id;
+                    return (
+                      <div key={lead.id} className={`${styles.inboxCard} ${styles[lead.status]}`}>
+                        <div
+                          className={styles.cardHeader}
+                          onClick={() => setExpandedLead(isExpanded ? null : lead.id)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className={styles.cardHeaderLeft}>
+                            <h3>{lead.name}</h3>
+                            <div className={styles.cardMeta}>
+                              <a
+                                href={`mailto:${lead.email}`}
+                                className={styles.email}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {lead.email}
+                              </a>
+                              {lead.phone && (
+                                <a
+                                  href={`tel:${lead.phone}`}
+                                  className={styles.phoneLink}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {lead.phone}
+                                </a>
+                              )}
+                            </div>
+                            {lead.service && (
+                              <span className={styles.service}>{lead.service}</span>
+                            )}
+                          </div>
+                          <div className={styles.cardHeaderRight}>
+                            <span className={`${styles.statusBadge} ${styles[`badge_${lead.status}`]}`}>
+                              {lead.status}
+                            </span>
+                            {lead.emailSent && (
+                              <span className={styles.emailSentBadge}>email sent</span>
+                            )}
+                            <span className={styles.date}>{lead.date}</span>
+                            <span className={styles.expandIcon}>{isExpanded ? "▲" : "▼"}</span>
+                          </div>
+                        </div>
+
+                        {isExpanded && (
+                          <>
+                            <div className={styles.messageBlock}>
+                              <span className={styles.messageLabel}>Message</span>
+                              <p className={styles.messageText}>{lead.message}</p>
+                            </div>
+                            <div className={styles.cardFooter}>
+                              <a
+                                href={`mailto:${lead.email}?subject=Re: Your Kavaro Inquiry`}
+                                className={`${styles.btn} ${styles.btnEmail}`}
+                              >
+                                Reply by Email
+                              </a>
+                              <div className={styles.actions}>
+                                {lead.status === "new" && (
+                                  <button
+                                    className={`${styles.btn} ${styles.btnRead}`}
+                                    onClick={() => handleMarkRead(lead.id)}
+                                  >
+                                    Mark Read
+                                  </button>
+                                )}
+                                {lead.status !== "replied" && (
+                                  <button
+                                    className={`${styles.btn} ${styles.btnReplied}`}
+                                    onClick={() => handleMarkReplied(lead.id)}
+                                  >
+                                    Mark Replied
+                                  </button>
+                                )}
+                                <button
+                                  className={`${styles.btn} ${styles.btnDelete}`}
+                                  onClick={() => handleDeleteLead(lead.id)}
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── BOOKED CALLS TAB ── */}
+          {activeTab === "calls" && (
+            <div className={styles.content}>
+              <div className={styles.callsHeader}>
+                <div>
+                  <h2>Booked Discovery Calls</h2>
+                  <p className={styles.callsSubtitle}>
+                    Clients who clicked the Calendly link on your site. Open Calendly to confirm
+                    actual scheduled times.
+                  </p>
+                </div>
+                <a
+                  href={CALENDLY_ADMIN_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.scheduleLink}
+                >
+                  Open Calendly Dashboard
+                </a>
+              </div>
+
+              {bookedCalls.length === 0 ? (
+                <p className={styles.emptyState}>No booked calls recorded yet</p>
+              ) : (
+                <div className={styles.callsList}>
+                  {bookedCalls.map((call) => (
+                    <div key={call.id} className={styles.callCard}>
+                      <div className={styles.callCardLeft}>
+                        <div className={styles.callAvatar}>
+                          {(call.name || "?")[0].toUpperCase()}
+                        </div>
+                        <div className={styles.callInfo}>
+                          <strong className={styles.callName}>{call.name || "Anonymous visitor"}</strong>
+                          {call.email ? (
+                            <a
+                              href={`mailto:${call.email}?subject=Your Discovery Call — Kavaro`}
+                              className={styles.callEmailLink}
+                            >
+                              {call.email}
+                            </a>
+                          ) : (
+                            <span className={styles.callNoEmail}>No email captured</span>
+                          )}
+                          {call.service && <span className={styles.service}>{call.service}</span>}
+                        </div>
+                      </div>
+                      <div className={styles.callCardRight}>
+                        <span className={styles.callDate}>{call.date}</span>
+                        <button
+                          className={`${styles.btn} ${styles.btnDelete}`}
+                          onClick={() => handleDeleteCall(call.id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── NOTES TAB ── */}
+          {activeTab === "notes" && (
+            <div className={styles.content}>
+              <div className={styles.notesHeader}>
+                <h2>Project Notes</h2>
+                <button
+                  className={styles.btnNew}
+                  onClick={() => setShowNewNoteForm(!showNewNoteForm)}
+                >
+                  {showNewNoteForm ? "Cancel" : "+ New Note"}
+                </button>
+              </div>
+
+              {showNewNoteForm && (
+                <div className={styles.noteForm}>
+                  <input
+                    type="text"
+                    placeholder="Note title..."
+                    value={newNote.title}
+                    onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
+                    className={styles.noteTitle}
+                  />
+                  <textarea
+                    placeholder="Write your note here..."
+                    value={newNote.content}
+                    onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
+                    rows={6}
+                  />
+                  <button className={styles.btnSave} onClick={handleAddNote}>
+                    Save Note
+                  </button>
+                </div>
+              )}
+
+              {notes.length === 0 ? (
+                <p className={styles.emptyState}>No notes yet</p>
+              ) : (
+                <div className={styles.notesList}>
+                  {notes.map((note) => (
+                    <div key={note.id} className={styles.noteCard}>
+                      <div className={styles.noteHeader}>
+                        <h3>{note.title}</h3>
+                        <button
+                          className={styles.btnDelete}
+                          onClick={() => handleDeleteNote(note.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      <p className={styles.noteContent}>{note.content}</p>
+                      <p className={styles.noteDate}>{note.date}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </>
       )}
     </main>
   );

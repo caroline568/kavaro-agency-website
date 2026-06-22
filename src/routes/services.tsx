@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { supabase } from "@/lib/supabase";
 import styles from "./Services.module.css";
 
 export const Route = createFileRoute("/services")({
@@ -264,13 +265,12 @@ const services: Service[] = [
 ];
 
 function registerBookedCall(calendlyUrl: string) {
-  const calls = JSON.parse(localStorage.getItem("kavaro_booked_calls") || "[]");
-  calls.push({
-    id: Date.now().toString(),
-    date: new Date().toLocaleString(),
-    url: calendlyUrl,
-  });
-  localStorage.setItem("kavaro_booked_calls", JSON.stringify(calls));
+  supabase.from("booked_calls").insert({
+    name: null,
+    email: null,
+    service: null,
+    calendly_url: calendlyUrl,
+  }).then(() => {});
 }
 
 function Services() {

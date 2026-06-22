@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { contactAPI, type ContactPayload } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
 import styles from "./Contact.module.css";
 
 export const Route = createFileRoute("/contact")({
@@ -86,32 +87,29 @@ function Contact() {
         throw new Error("Please fill in all required fields (Name, Email, Message)");
       }
 
-      const lead = {
-        id: Date.now().toString(),
-        name: payload.name,
-        email: payload.email,
-        phone: payload.phone || undefined,
-        service: payload.service || undefined,
-        message: payload.message,
-        date: new Date().toLocaleDateString(),
-        status: "new" as const,
-        emailSent: false,
-      };
+      let emailSent = false;
 
       if (emailConfigured) {
         const response = await contactAPI.send(payload);
-
         if (response.status === 200) {
-          lead.emailSent = true;
+          emailSent = true;
         } else {
           throw new Error("Failed to send message. Please try again.");
         }
       }
 
-      const existingLeads = localStorage.getItem("kavaro_leads");
-      const leadsArray = existingLeads ? JSON.parse(existingLeads) : [];
-      leadsArray.push(lead);
-      localStorage.setItem("kavaro_leads", JSON.stringify(leadsArray));
+      // Save to Supabase (primary persistence)
+      const { error: dbError } = await supabase.from("leads").insert({
+        name: payload.name,
+        email: payload.email,
+        phone: payload.phone || null,
+        service: payload.service || null,
+        message: payload.message,
+        status: "new",
+        email_sent: emailSent,
+      });
+
+      if (dbError) throw new Error("Failed to save your inquiry. Please try again.");
 
       setStatus({
         type: "success",
@@ -238,17 +236,12 @@ function Contact() {
                 rel="noreferrer"
                 className={styles.link}
                 onClick={() => {
-                  const calls = JSON.parse(localStorage.getItem("kavaro_booked_calls") || "[]");
-                  calls.push({
-                    id: Date.now().toString(),
-                    date: new Date().toLocaleString(),
-                    url: calendlyUrl,
-                    // capture whatever the user has typed into the form at click time
-                    name: form.name.trim() || undefined,
-                    email: form.email.trim() || undefined,
-                    service: form.service.trim() || undefined,
-                  });
-                  localStorage.setItem("kavaro_booked_calls", JSON.stringify(calls));
+                  supabase.from("booked_calls").insert({
+                    name: form.name.trim() || null,
+                    email: form.email.trim() || null,
+                    service: form.service.trim() || null,
+                    calendly_url: calendlyUrl,
+                  }).then(() => {});
                 }}
               >
                 Schedule a discovery call
