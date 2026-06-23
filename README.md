@@ -7,9 +7,12 @@ Kavaro Agency is a creative digital agency focused on delivering modern, user-ce
 This website serves as the official online presence of Kavaro Agency, showcasing services, vision, and projects built by the team.
 
 🚀 Tech Stack
-HTML5
+HTML5 
+
 CSS3
-Typescript
+
+Typescript /Javasript
+
 Responsive Web Design Principles
 
 ✨ Features
