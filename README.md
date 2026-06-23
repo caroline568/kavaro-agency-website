@@ -47,7 +47,7 @@ Digital Product Development
 📫 Connect With Me
 LinkedIn: [www.linkedin.com/in/carolinenjogu]
 GitHub: [https://github.com/caroline568]
-Portfolio: Coming soon
+Portfolio: https://caroline-cv.vercel.app/
 
 
 🧠 Closing Thought
