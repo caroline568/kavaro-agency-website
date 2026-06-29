@@ -10,7 +10,7 @@ This repository contains the source code for our agency website, showcasing our 
 
 # 🌟 About Kavaro
 
-Kavaro Agency exists to help businesses build meaningful digital experiences through thoughtful design, modern web development, AI-powered solutions, and strong visual branding.
+Kavaro Agency- help businesses transform ideas into modern digital products—from websites and booking systems to AI-powered solutions, intuitive user experiences, compelling visual identities, and strategic brand foundations.
 
 We believe great digital products are not just beautiful—they should solve real problems, create value, and make life easier for the people using them.
 
@@ -100,7 +100,36 @@ Thoughtfully designed digital experiences backed by research and product strateg
 * FigJam
 * Prototyping Tools
 
+
 ---
+
+## 🎯 Brand Basics & Strategy
+
+Every great brand starts with clarity. We help new businesses establish a strong foundation with a clear identity, positioning, and visual direction—without overwhelming them with lengthy strategy documents.
+
+### Services
+
+* Brand Discovery
+* Brand Positioning
+* Naming Support
+* Brand Messaging
+* Visual Direction
+* Creative Strategy
+* Brand Guidelines
+
+### What You'll Get
+
+A clear name, message, and visual direction for your business. No bloated strategy decks—just the essentials that help you show up consistently from day one.
+
+**Deliverables**
+
+* Brand Foundation
+* Messaging Framework
+* Visual Direction
+* Typography & Color Guidance
+* Brand Voice
+* Basic Brand Guidelines
+
 
 ## 🎯 Graphic Design
 
