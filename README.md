@@ -176,39 +176,6 @@ Creative assets that help businesses build memorable and consistent brands.
 
 ---
 
-# 🚀 Getting Started
-
-## Clone the Repository
-
-```bash
-git clone https://github.com/caroline568/kavaro-agency-website.git
-```
-
-## Navigate into the Project
-
-```bash
-cd kavaro-agency-website
-```
-
-## Install Dependencies
-
-```bash
-npm install
-```
-
-## Start the Development Server
-
-```bash
-npm run dev
-```
-
-## Build for Production
-
-```bash
-npm run build
-```
-
----
 
 # 👥 Meet the Team
 
