@@ -2,7 +2,7 @@
 
 > **Design the Experience. Build the System.**
 
-The official website for **Kavaro Agency**—a creative digital agency specializing in **Web Development, AI Solutions, UI/UX Design, and Graphic Design**.
+The official website for **Kavaro Agency**—a creative digital agency specializing in **Web Development, AI Solutions, UI/UX Design, Graphic Design, and Brand Strategy**.
 
 This repository contains the source code for our agency website, showcasing our services, portfolio, and expertise while demonstrating our commitment to building modern, accessible, and scalable digital experiences.
 
