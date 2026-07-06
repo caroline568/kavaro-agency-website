@@ -9,7 +9,6 @@ import hezronImg from "@/assets/hezron.jpeg";
 import brendaImg from "@/assets/brenda.jpeg";
 import carolgroceryImg from "@/assets/Carol's grocery.png";
 import smargoImg from "@/assets/smargo-homepage.png";
-import eastonImg from "@/assets/easton.jpeg";
 import splashscreeImg from "@/assets/Splash Screen.png";
 import aireactImg from "@/assets/ai-react.png";
 
@@ -350,12 +349,6 @@ function Home() {
               role: "Graphic Designer · Web Developer",
               bio: "The visual voice of the team. Brings brand identities and marketing assets to life, from logos to pitch decks, with an eye for detail that makes things feel intentional.",
               image: hezronImg,
-            },
-            {
-              name: "Easton Hans",
-              role: "Web Developer · UI/UX Designer",
-              bio: "Turns designs into fast, accessible, production-ready code. Specialises in React and component architecture. If it runs in a browser, he cares about how well it runs.",
-              image: eastonImg,
             },
             {
               name: "Brenda Chebet",
