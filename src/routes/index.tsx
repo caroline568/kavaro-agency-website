@@ -16,25 +16,31 @@ const services = [
   {
     num: "01",
     title: "Web Development",
-    desc: "Modern, AI-ready websites and platforms - landing pages, booking flows and dashboards built with care.",
+    desc: "Modern, AI-ready websites and digital platforms - landing pages, booking flows, dashboards and custom solutions built with care.",
     tag: "React · Node.js · TypeScript",
   },
   {
     num: "02",
-    title: "AI Solutions",
-    desc: "Smart assistants, automation and AI features integrated into your product where they actually help.",
-    tag: "LLMs · Automation · Integration",
-  },
-  {
-    num: "03",
     title: "UI / UX Design",
-    desc: "Interfaces designed by a trained product designer - clear flows, real research, no fluff.",
+    desc: "User-centered interfaces designed with research, clear user flows and thoughtful experiences that make products easier to use.",
     tag: "Figma · Prototyping · Research",
   },
   {
+    num: "03",
+    title: "AI Solutions",
+    desc: "Practical AI features, automation and intelligent tools integrated into your business where they create real value.",
+    tag: "LLMs · Automation · Integration",
+  },
+  {
     num: "04",
+    title: "Brand Strategy & Basics",
+    desc: "Helping growing businesses define their brand direction, messaging and visual foundation before they build online.",
+    tag: "Strategy · Identity · Positioning",
+  },
+  {
+    num: "05",
     title: "Graphic Design",
-    desc: "Visual identities and marketing assets that make your brand feel intentional and modern.",
+    desc: "Visual assets and creative systems that help your business communicate clearly and maintain a consistent identity.",
     tag: "Branding · Print · Social",
   },
 ];
