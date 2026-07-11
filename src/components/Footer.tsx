@@ -9,8 +9,8 @@ export default function Footer() {
         <div className={styles.brand}>
           <img src={kavaroLogo} alt="Kavaro Agency logo" className={styles.logoImage} />
           <p className={styles.desc}>
-            A small remote team designing and building honest digital products for growing
-            businesses. One website at a time.
+            A remote web development team designing and building modern websites and digital tools
+            that help growing businesses attract customers, improve operations, and grow online.
           </p>
           <a href="mailto:hello@kavaroagency.com" className={styles.emailLink}>
             hello@kavaroagency.com
@@ -20,19 +20,19 @@ export default function Footer() {
           <h5>Services</h5>
           <ul>
             <li>
-              <Link to="/services">UI / UX Design</Link>
-            </li>
-            <li>
-              <Link to="/services">Graphic Design</Link>
-            </li>
-            <li>
               <Link to="/services">Web Development</Link>
             </li>
             <li>
-              <Link to="/services">AI Solutions</Link>
+              <Link to="/services">UI / UX Design</Link>
             </li>
             <li>
-              <Link to="/services">Brand Basics</Link>
+              <Link to="/services">AI-Powered Solutions</Link>
+            </li>
+            <li>
+              <Link to="/services">Business Websites</Link>
+            </li>
+            <li>
+              <Link to="/services">Brand & Visual Design</Link>
             </li>
           </ul>
         </div>

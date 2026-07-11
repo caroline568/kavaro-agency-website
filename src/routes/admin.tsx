@@ -82,7 +82,9 @@ function AdminDashboard() {
       setAuthLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsAuthenticated(!!session);
     });
 
@@ -275,7 +277,8 @@ function AdminDashboard() {
           className={`${styles.tab} ${activeTab === "calls" ? styles.active : ""}`}
           onClick={() => setActiveTab("calls")}
         >
-          Booked Calls {stats.bookedCalls > 0 && <span className={styles.tabBadge}>{stats.bookedCalls}</span>}
+          Booked Calls{" "}
+          {stats.bookedCalls > 0 && <span className={styles.tabBadge}>{stats.bookedCalls}</span>}
         </button>
         <button
           className={`${styles.tab} ${activeTab === "notes" ? styles.active : ""}`}
@@ -339,7 +342,9 @@ function AdminDashboard() {
                         <div className={styles.leadItemLeft}>
                           <div className={styles.leadItemMeta}>
                             <strong>{lead.name}</strong>
-                            <span className={`${styles.statusPill} ${styles[`pill_${lead.status}`]}`}>
+                            <span
+                              className={`${styles.statusPill} ${styles[`pill_${lead.status}`]}`}
+                            >
                               {lead.status}
                             </span>
                             {lead.emailSent && (
@@ -446,7 +451,9 @@ function AdminDashboard() {
 
               {filteredLeads.length === 0 ? (
                 <p className={styles.emptyState}>
-                  {searchQuery || statusFilter !== "all" ? "No matching inquiries" : "No inquiries yet"}
+                  {searchQuery || statusFilter !== "all"
+                    ? "No matching inquiries"
+                    : "No inquiries yet"}
                 </p>
               ) : (
                 <div className={styles.inboxList}>
@@ -479,12 +486,12 @@ function AdminDashboard() {
                                 </a>
                               )}
                             </div>
-                            {lead.service && (
-                              <span className={styles.service}>{lead.service}</span>
-                            )}
+                            {lead.service && <span className={styles.service}>{lead.service}</span>}
                           </div>
                           <div className={styles.cardHeaderRight}>
-                            <span className={`${styles.statusBadge} ${styles[`badge_${lead.status}`]}`}>
+                            <span
+                              className={`${styles.statusBadge} ${styles[`badge_${lead.status}`]}`}
+                            >
                               {lead.status}
                             </span>
                             {lead.emailSent && (
@@ -575,7 +582,9 @@ function AdminDashboard() {
                           {(call.name || "?")[0].toUpperCase()}
                         </div>
                         <div className={styles.callInfo}>
-                          <strong className={styles.callName}>{call.name || "Anonymous visitor"}</strong>
+                          <strong className={styles.callName}>
+                            {call.name || "Anonymous visitor"}
+                          </strong>
                           {call.email ? (
                             <a
                               href={`mailto:${call.email}?subject=Your Discovery Call — Kavaro`}

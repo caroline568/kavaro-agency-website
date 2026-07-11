@@ -46,8 +46,8 @@ type Status = {
 function Contact() {
   const emailConfigured = Boolean(
     import.meta.env.VITE_EMAILJS_SERVICE_ID &&
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID &&
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID &&
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
   );
 
   const calendlyUrl =
@@ -69,17 +69,22 @@ function Contact() {
   // Capture name + email when visitor completes Calendly booking
   useCalendlyEventListener({
     onEventScheduled: (e) => {
-      const invitee = e.data.payload?.invitee as unknown as {
-        name?: string;
-        email?: string;
-      } | undefined;
+      const invitee = e.data.payload?.invitee as unknown as
+        | {
+            name?: string;
+            email?: string;
+          }
+        | undefined;
 
-      supabase.from("booked_calls").insert({
-        name: (invitee?.name ?? form.name.trim()) || null,
-        email: (invitee?.email ?? form.email.trim()) || null,
-        service: form.service.trim() || null,
-        calendly_url: calendlyUrl,
-      }).then(() => {});
+      supabase
+        .from("booked_calls")
+        .insert({
+          name: (invitee?.name ?? form.name.trim()) || null,
+          email: (invitee?.email ?? form.email.trim()) || null,
+          service: form.service.trim() || null,
+          calendly_url: calendlyUrl,
+        })
+        .then(() => {});
 
       setCalendlyOpen(false);
     },
@@ -93,9 +98,7 @@ function Contact() {
 
   // Shared details fields are always required before either action
   const detailsComplete =
-    form.name.trim() !== "" &&
-    form.email.trim() !== "" &&
-    form.service !== "";
+    form.name.trim() !== "" && form.email.trim() !== "" && form.service !== "";
 
   function handleBookCall() {
     if (!detailsComplete) return;
@@ -183,7 +186,6 @@ function Contact() {
 
       <div className={styles.container}>
         <div className={styles.layout}>
-
           {/* ── LEFT: contact info ── */}
           <div className={styles.sidebar}>
             <div className={styles.sideCard}>
@@ -212,7 +214,6 @@ function Contact() {
           {/* ── RIGHT: unified form ── */}
           <div className={styles.formWrap}>
             <form onSubmit={handleSubmit} noValidate>
-
               {/* ── Shared fields — always visible ── */}
               <div className={styles.fieldset}>
                 <p className={styles.fieldsetLabel}>Your Details</p>

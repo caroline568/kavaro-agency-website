@@ -104,12 +104,7 @@ const services: Service[] = [
         price: "KES 15,000 – 25,000",
         usd: "$110 – $185",
         timeline: "3 – 5 working days",
-        features: [
-          "1 – 3 screens",
-          "Figma mockup",
-          "Mobile-first layout",
-          "1 round of revisions",
-        ],
+        features: ["1 – 3 screens", "Figma mockup", "Mobile-first layout", "1 round of revisions"],
       },
       {
         name: "Business Website",
@@ -266,17 +261,26 @@ const services: Service[] = [
   },
 ];
 
-function registerBookedCall(name: string | null, email: string | null, service: string | null, calendlyUrl: string) {
-  supabase.from("booked_calls").insert({
-    name,
-    email,
-    service,
-    calendly_url: calendlyUrl,
-  }).then(() => {});
+function registerBookedCall(
+  name: string | null,
+  email: string | null,
+  service: string | null,
+  calendlyUrl: string,
+) {
+  supabase
+    .from("booked_calls")
+    .insert({
+      name,
+      email,
+      service,
+      calendly_url: calendlyUrl,
+    })
+    .then(() => {});
 }
 
 function Services() {
-  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/hello-kavaro/30min";
+  const calendlyUrl =
+    import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/hello-kavaro/30min";
   // PopupModal requires a direct event URL, not the profile landing page.
   // Append /30min if the URL doesn't already point to a specific event.
   const calendlyEventUrl = calendlyUrl.endsWith("/")
@@ -294,10 +298,12 @@ function Services() {
     onEventScheduled: (e) => {
       // The react-calendly types only expose `uri` on invitee, but the
       // full payload includes name and email at runtime.
-      const invitee = e.data.payload?.invitee as unknown as {
-        name?: string;
-        email?: string;
-      } | undefined;
+      const invitee = e.data.payload?.invitee as unknown as
+        | {
+            name?: string;
+            email?: string;
+          }
+        | undefined;
       registerBookedCall(
         invitee?.name ?? null,
         invitee?.email ?? null,
@@ -358,9 +364,7 @@ function Services() {
                   key={tier.name}
                   className={`${styles.tierCard} ${tier.popular ? styles.tierPopular : ""}`}
                 >
-                  {tier.popular && (
-                    <div className={styles.popularBadge}>Most Popular</div>
-                  )}
+                  {tier.popular && <div className={styles.popularBadge}>Most Popular</div>}
                   <div className={styles.tierName}>{tier.name}</div>
                   <div className={styles.tierPrice}>{tier.price}</div>
                   <div className={styles.tierUsd}>{tier.usd}</div>
@@ -371,10 +375,7 @@ function Services() {
                     ))}
                   </ul>
                   <div className={styles.tierActions}>
-                    <button
-                      className="btn-primary"
-                      onClick={() => openCalendly(s.title)}
-                    >
+                    <button className="btn-primary" onClick={() => openCalendly(s.title)}>
                       Book a Call
                     </button>
                     <Link to="/contact" className="btn-navy">
