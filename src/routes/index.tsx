@@ -4,7 +4,7 @@ import founderImg from "@/assets/founder.png";
 import styles from "./Home.module.css";
 import { PopupModal } from "react-calendly";
 
-import carolineImg from "@/assets/caroline.png";
+import carolineImg from "@/assets/founder.png";
 import hezronImg from "@/assets/hezron.jpeg";
 import brendaImg from "@/assets/brenda.jpeg";
 import carolgroceryImg from "@/assets/Carol's grocery.png";
@@ -49,12 +49,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Kavaro is a remote digital agency specializing in UI/UX design, web development, and AI-powered digital solutions for modern businesses.",
+          "Kavaro is a remote digital agency specializing in modern web development, UI/UX design, and AI-powered solutions that help businesses build, launch, and grow online.",
       },
 
       {
         property: "og:title",
-        content: "Kavaro Agency - Digital Product & Web Development Agency",
+        content: "Kavaro Agency | Web Development & Digital Solutions",
       },
 
       {
@@ -66,67 +66,72 @@ export const Route = createFileRoute("/")({
   }),
 });
 const stats = [
-  { num: "UI/UX", label: "Design-Led Agency" },
-  { num: "100%", label: "Remote-First" },
-  { num: "12h", label: "Average Reply Time" },
+  { num: "Full-Stack", label: "Web Development" },
+  { num: "100%", label: "Remote Collaboration" },
+  { num: "24h", label: "Average Response" },
 ];
 
 const industries = [
   {
     icon: "🏥",
-    name: "Healthcare & Clinics",
-    desc: "Patient portals, appointment booking, results delivery.",
+    name: "Healthcare",
+    desc: "Clinic websites, patient portals, appointment booking, and digital healthcare experiences.",
   },
   {
-    icon: "💊",
-    name: "Pharmacies & Labs",
-    desc: "Online catalogues, prescription requests, deliveries.",
+    icon: "🏢",
+    name: "Businesses & Startups",
+    desc: "Professional websites, web applications, and digital platforms.",
+  },
+  {
+    icon: "🛒",
+    name: "E-commerce",
+    desc: "Online stores, payment integrations, and customer experiences.",
   },
   {
     icon: "🎓",
-    name: "Schools & Training",
-    desc: "Admissions, fee portals, parent communication.",
+    name: "Education",
+    desc: "School websites, student portals, and learning platforms.",
   },
   {
-    icon: "🛍️",
-    name: "Local Businesses",
-    desc: "Storefronts, online ordering, customer engagement.",
+    icon: "💼",
+    name: "Professional Services",
+    desc: "Booking systems, client portals, and business automation.",
   },
-  { icon: "💼", name: "Service Providers", desc: "Bookings, quotes, client dashboards and CRM." },
   {
-    icon: "🌍",
-    name: "International Brands",
-    desc: "Marketing sites, SaaS products, AI integrations.",
+    icon: "🤖",
+    name: "Custom Digital Solutions",
+    desc: "AI integrations, automation, and scalable web applications.",
   },
 ];
 const skills = [
-  "UI / UX Product Design",
+  "Full-Stack Web Development",
+  "React & TypeScript",
+  "Node.js & Express",
+  "Python",
+  "UI / UX Design",
   "Figma & Prototyping",
-  "User Research",
-  "Design Systems",
-  "React & Python",
-  "Node.js",
-  "Tailwind CSS",
-  "AI / LLM Integration",
-  "Responsive Web",
+  "Responsive Web Design",
+  "AI Integration",
+  "API Development",
   "Accessibility",
 ];
+
 const whyUs = [
   {
-    title: "Design-Led Team",
-    desc: "Every project is shaped by our combined skills in UI/UX design, development, and product thinking - not templates or shortcuts.",
+    title: "Full-Service Delivery",
+    desc: "From strategy and UI/UX design to development, deployment, and ongoing support, we handle the entire product journey under one team.",
   },
   {
-    title: "Hands-On Collaboration",
-    desc: "Clients work directly with our team - designers and developers - ensuring clear communication and fast execution without unnecessary layers.",
+    title: "Modern Web Engineering",
+    desc: "We build fast, secure, and scalable websites and web applications using modern technologies and best development practices.",
   },
   {
-    title: "Remote-First Agency",
-    desc: "We operate as a distributed team, collaborating online across tools and timezones to deliver projects efficiently and consistently.",
+    title: "Collaborative Partnership",
+    desc: "You work directly with our designers and engineers, ensuring clear communication, faster decisions, and solutions tailored to your business.",
   },
   {
-    title: "AI-Ready Builds",
-    desc: "Our team integrates modern AI capabilities into products - from chat systems to automation and smart workflows - where they actually add value.",
+    title: "Future-Ready Solutions",
+    desc: "We build with growth in mind, integrating AI, automation, and scalable technologies where they create real business value.",
   },
 ];
 
@@ -188,32 +193,35 @@ const projects = [
 const steps = [
   {
     num: "01",
-    title: "Discovery Call",
-    desc: "Free 30-min call to understand your goals and constraints.",
+    title: "Discovery",
+    desc: "We learn about your business, goals, and project requirements.",
   },
   {
     num: "02",
     title: "Proposal",
-    desc: "Clear scope, timeline and pricing - sent within 48 hours.",
+    desc: "Receive a clear project scope, timeline, and transparent pricing.",
   },
   {
     num: "03",
-    title: "Design & Build",
-    desc: "Iterative design and development with regular async updates and check-ins.",
+    title: "Design & Development",
+    desc: "We design, build, and test your website or web application with regular progress updates.",
   },
-  { num: "04", title: "Revisions", desc: "Two rounds of revisions included on every package." },
+  {
+    num: "04",
+    title: "Review & Refinement",
+    desc: "Review the project and request revisions to ensure everything meets your expectations.",
+  },
   {
     num: "05",
-    title: "Final Delivery",
-    desc: "Launch, training and a clean handoff with all assets.",
+    title: "Launch",
+    desc: "We deploy your project, perform final testing, and provide a complete handover.",
   },
   {
     num: "06",
-    title: "Support",
-    desc: "30 days of post-launch support included on every project.",
+    title: "Ongoing Support",
+    desc: "Enjoy 30 days of post-launch support to keep everything running smoothly.",
   },
 ];
-
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/hello-kavaro";
 
 function Home() {
@@ -232,9 +240,9 @@ function Home() {
             A Remote Digital Agency Building <em>Websites</em> &amp; Digital Tools
           </h1>
           <p>
-            Kavaro is a remote agency for growing businesses - landing pages, business websites,
-            booking systems, dashboards and AI-enhanced features. Designed by a trained product
-            designer, built with modern tools, shipped honestly.
+            Kavaro is a remote digital agency building modern websites, web applications, and
+            AI-powered solutions for growing businesses. We combine thoughtful design with reliable
+            engineering to create digital products that perform.
           </p>
           <div className={styles.heroBtns}>
             <Link to="/services" className="btn-primary">
@@ -286,7 +294,7 @@ function Home() {
           />
           <div className={styles.vmFounder}>
             <strong>Kavaro</strong>
-            <span>Founder · Creative Director · Product Designer</span>
+            <span>Founder · Software Engineer · Creative Director</span>
           </div>
         </div>
         <div className={styles.vmCards}>
@@ -295,79 +303,95 @@ function Home() {
             This Started With <em>Our Founder's Dad</em>.
           </h2>
           <p className={styles.storyP}>
-            Our founder's father was a dialysis patient. For years she watched him travel to the hospital just to book a session, ask a question, get a refill, or confirm a result. Things a simple website or booking page could have handled in seconds. The clinic had no online presence. The pharmacy had no online presence. Most of the services he depended on had no digital front door at all.
+            Kavaro began with a personal experience. Our founder's father was a dialysis patient,
+            and for years she watched him make unnecessary trips to the hospital just to book
+            appointments, ask simple questions, refill prescriptions, or confirm test results. Many
+            of these tasks could have been handled online in minutes, yet the clinic, pharmacy, and
+            other essential services had little or no digital presence. That experience revealed a
+            much bigger problem: too many businesses and organizations were still difficult to reach
+            because they lacked modern digital solutions. It inspired the mission behind Kavaro—to
+            help organizations build accessible, reliable, and user-friendly digital experiences
+            that save time, improve access, and create better experiences for the people they serve.
           </p>
           <p className={styles.storyP}>
-            He has since passed on, but the gap he lived with every day is still here. It's still hurting families like ours. So many local businesses, clinics, pharmacies, schools and small service providers, are invisible online, and the people who need them suffer for it. Kavaro exists in his memory, to change that one honest website at a time.
+            He has since passed on, but the gap he experienced still affects many families today.
+            Too many businesses and essential services remain invisible online. Kavaro exists in his
+            memory—to help bridge that gap, one honest website at a time.
           </p>
+
           <p className={styles.storyP}>
-            We are a small remote team of UI/UX designers and developers based across Kenya. Our
-            founding team brings certified expertise in UI/UX design, software engineering,
-            cybersecurity thinking and generative AI, built through real training at Moringa School
-            and applied through every project we take on.
+            We are a remote team of designers and software engineers based in Kenya, building modern
+            websites, web applications, and digital solutions for growing businesses. Our team
+            combines expertise in UI/UX design, software engineering, cybersecurity, and generative
+            AI to create reliable, user-focused products.
           </p>
+
           <p className={styles.storyP}>
-            We combine design thinking, modern engineering and practical AI capabilities to build digital products that genuinely work for the businesses and people using them.
+            We combine modern engineering, thoughtful design, and practical AI capabilities to build
+            websites and digital products that solve real business challenges and create better
+            experiences for the people using them.
           </p>
+
           <div className={styles.vmCard}>
             <h3>Our Vision</h3>
             <p>
-              A world where every growing business - from a Nairobi clinic to a remote-first startup
-              - has a digital experience that genuinely works for the people using it.
+              A world where every growing business—from a Nairobi clinic to a global startup—has
+              access to reliable, user-friendly digital experiences that help them serve their
+              customers better.
             </p>
           </div>
+
           <div className={styles.vmCard}>
             <h3>Our Mission</h3>
             <p>
-              Design and build modern websites and digital tools that help growing businesses serve
-              their customers better - combining product-design thinking with hands-on engineering.
+              To design and build modern websites, web applications, and digital tools that help
+              growing businesses connect with customers, operate better, and grow online through
+              thoughtful design and reliable engineering.
             </p>
           </div>
         </div>
       </section>
 
-      <section className={styles.teamSec}>
-        <div className="section-label">The Team</div>
-        <h2 className={styles.secH}>
-          Small Agency. <em>Focused Execution.</em>
-        </h2>
-        <p className={styles.secSub}>
-          Kavaro is a remote digital agency of UI/UX designers and full-stack developers building
-          modern digital products through design and code. We grow intentionally - through real
-          projects, collaboration, and continuous learning.
-        </p>
-        <div className={styles.teamGrid}>
-          {[
-            {
-              name: "Caroline Nyawira",
-              role: "Founder · Creative Director",
-              bio: "Founded Kavaro to close the digital gap for local businesses. Leads product strategy, UI/UX design and client vision, with a background in cybersecurity and generative AI.",
-              image: carolineImg,
-            },
-            {
-              name: "Hezron Sande",
-              role: "Graphic Designer · Web Developer",
-              bio: "The visual voice of the team. Brings brand identities and marketing assets to life, from logos to pitch decks, with an eye for detail that makes things feel intentional.",
-              image: hezronImg,
-            },
-            {
-              name: "Brenda Chebet",
-              role: "Web Developer · UI/UX Designer",
-              bio: "Bridges design and development - equally comfortable in Figma and a codebase. Brings a user-first perspective to every interface she touches.",
-              image: brendaImg,
-            },
-          ].map((m) => (
-            <div key={m.name} className={styles.teamCard}>
-              <div className={styles.teamAvatar}>
-                <img src={m.image} alt={m.name} className={styles.teamImg} loading="lazy" />
-              </div>
-              <h4>{m.name}</h4>
-              <span className={styles.teamRole}>{m.role}</span>
-              <p>{m.bio}</p>
+      <div className={styles.teamGrid}>
+        {[
+          {
+            name: "Caroline Nyawira",
+            role: "Founder · Software Engineer · Creative Director",
+            bio: "Leads Kavaro's product vision, engineering direction, and client strategy. Combining software engineering, product design, and digital strategy, she guides projects from idea to launch, ensuring every solution is practical, scalable, and built around real user needs.",
+            image: carolineImg,
+          },
+          {
+            name: "Hezron Sande",
+            role: "Full-Stack Software Engineer",
+            bio: "Builds the systems behind modern digital products, developing reliable frontend and backend solutions, secure APIs, and scalable architectures. He focuses on creating fast, maintainable, and production-ready applications.",
+            image: hezronImg,
+          },
+          {
+            name: "Brenda Chebet",
+            role: "Product Designer · Frontend Developer",
+            bio: "Creates intuitive user experiences and transforms designs into responsive, functional interfaces. She bridges product design and frontend development to deliver digital experiences that are accessible, polished, and easy to use.",
+            image: brendaImg,
+          },
+        ].map((m) => (
+          <div key={m.name} className={styles.teamCard}>
+            <div className={styles.teamAvatar}>
+              <img src={m.image} alt={m.name} className={styles.teamImg} loading="lazy" />
             </div>
-          ))}
-        </div>
-      </section>
+
+            <h4>{m.name}</h4>
+            <span className={styles.teamRole}>{m.role}</span>
+            <p>{m.bio}</p>
+          </div>
+        ))}
+      </div>
+      {/* Put it HERE - outside the teamGrid */}
+      <div className={styles.teamDescription}>
+        <p>
+          Every project at Kavaro is a collaborative effort. Our designers and engineers work
+          together to deliver complete digital solutions—from strategy and design to development,
+          deployment, and ongoing support.
+        </p>
+      </div>
 
       <section className={styles.industriesSec}>
         <div className="section-label">Who We Serve</div>
@@ -375,8 +399,9 @@ function Home() {
           Built for Businesses That <em>Serve People</em>
         </h2>
         <p className={styles.secSub}>
-          Small and growing businesses - from local clinics to remote-first startups. If your
-          customers need to find, book or buy from you, we can help.
+          We partner with growing businesses — from local clinics to global startups — to build
+          websites, web applications, and digital experiences that help them connect with customers
+          and grow online.
         </p>
         <div className={styles.indGrid}>
           {industries.map((i) => (
@@ -393,8 +418,8 @@ function Home() {
         <div className="section-label">What We Do</div>
         <h2 className={styles.secH}>What Kavaro Can Build for You Today</h2>
         <p className={styles.secSub}>
-          Websites, booking systems, dashboards, AI-enhanced features and brand systems - built
-          clean and shipped honestly.
+          We build modern websites, web applications, booking systems, dashboards, and AI-powered
+          solutions that help businesses serve customers better and grow online.
         </p>
         <div className={styles.svcGrid}>
           {services.map((s, i) => (
@@ -424,13 +449,13 @@ function Home() {
       </section>
 
       <section className={styles.projSec}>
-        <div className="section-label">Sample Work</div>
-        <h2 className={styles.secH}>Featured Concepts &amp; Case Studies</h2>
+        <div className="section-label">Our Work</div>
+        <h2 className={styles.secH}>Websites, Products &amp; Digital Experiences</h2>
         <p className={styles.secSub}>
-          We build our portfolio through independent concept projects, brand redesigns and UX case
-          studies created by our team. These reflect the kind of digital experiences we build for
-          clients.
+          A collection of concept projects and case studies showcasing our ability to design and
+          build modern websites, web applications, and digital experiences.
         </p>
+
         <div className={styles.projGrid}>
           {projects.map((p) => (
             <article className={styles.projCard} key={p.title}>
@@ -471,8 +496,9 @@ function Home() {
           ))}
         </div>
         <p className={styles.projNote}>
-          Our current portfolio is built from concept projects and case studies. Client work and
-          testimonials are coming soon.
+          Our portfolio currently features concept projects and case studies that showcase our
+          approach, process, and capabilities. We are continuously expanding our work with
+          businesses and growing our collection of client projects.
         </p>
       </section>
 
@@ -483,14 +509,15 @@ function Home() {
               Skills &amp; Background
             </div>
             <h2 className={styles.comingH}>
-              Where Design Meets Engineering,
+              Where Engineering Meets Design,
               <br />
               <em>Built</em> as One Agency
             </h2>
+
             <p className={styles.comingDesc}>
-              Kavaro is a product studio where UI/UX design and software engineering come together.
-              We combine design thinking with modern development to build digital products that are
-              both visually intentional and technically solid.
+              Kavaro is a digital agency where software engineering and UI/UX design come together.
+              We build modern websites, web applications, and digital products that are visually
+              thoughtful, technically reliable, and designed to solve real business needs.
             </p>
             <div className={styles.ctags}>
               {skills.map((s) => (
@@ -524,8 +551,8 @@ function Home() {
         <div className="section-label">Why Kavaro</div>
         <h2 className={styles.secH}>The Kavaro Difference</h2>
         <p className={styles.secSub}>
-          A small remote studio focused on craft, honesty and the kind of attention bigger agencies
-          cannot give.
+          We combine thoughtful design, strong engineering, and close collaboration to create
+          digital products that are built intentionally and made to last.
         </p>
         <div className={styles.whyGrid}>
           {whyUs.map((w) => (
@@ -539,10 +566,11 @@ function Home() {
 
       <section className={styles.section}>
         <div className="section-label">How We Work</div>
-        <h2 className={styles.secH}>Our Process - A System You Can Trust</h2>
+        <h2 className={styles.secH}>Our Process — From Idea to Launch</h2>
+
         <p className={styles.secSub}>
-          Businesses trust systems. Here is exactly what working with Kavaro looks like, from first
-          call to ongoing support.
+          We follow a structured process to turn ideas into reliable digital products — from
+          discovery and planning to design, development, deployment, and ongoing support.
         </p>
         <div className={styles.procSteps7}>
           {steps.map((s) => (
@@ -559,9 +587,11 @@ function Home() {
         <h2>
           Ready to Build Something <em>Real?</em>
         </h2>
+
         <p>
-          Whether you are a clinic in Nairobi or a startup anywhere in the world - let us talk.
-          100% remote, 100% honest.
+          Whether you are a clinic in Nairobi or a growing business anywhere in the world, let's
+          build a website, digital product, or solution that helps you serve your customers better.
+          100% remote. 100% committed.
         </p>
         <div className={styles.ctaBtns}>
           <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="btn-primary">
