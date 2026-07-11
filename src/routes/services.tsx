@@ -137,6 +137,41 @@ const services: Service[] = [
   },
   {
     num: "03",
+    title: "Brand Basics",
+    tag: "Strategy",
+    desc: "A clear name, message and visual direction for new businesses. No bloated strategy decks — just the essentials that help you show up consistently from day one.",
+    tiers: [
+      {
+        name: "Brand Starter",
+        price: "KES 12,000 – 20,000",
+        usd: "$90 – $150",
+        timeline: "3 – 5 working days",
+        features: [
+          "Name & tagline review",
+          "Color palette & fonts",
+          "Tone of voice doc",
+          "Social bio & profile setup",
+        ],
+      },
+      {
+        name: "Brand Foundation",
+        price: "KES 25,000 – 40,000",
+        usd: "$185 – $300",
+        timeline: "7 – 10 working days",
+        popular: true,
+        features: [
+          "Everything in Brand Starter",
+          "Logo design",
+          "One-page brand guide",
+          "Business card design",
+          "Social profile setup",
+        ],
+      },
+    ],
+  },
+
+  {
+    num: "04",
     title: "AI-Enhanced Features",
     tag: "AI",
     desc: "Practical AI added to your website or product — chat assistants, smart forms, automation and OpenAI integrations. AI that actually helps your customers, not buzzword AI.",
@@ -181,7 +216,7 @@ const services: Service[] = [
     ],
   },
   {
-    num: "04",
+    num: "05",
     title: "Graphic Design",
     tag: "Design",
     desc: "Visual assets that make your business look credible and consistent — from a first logo to a full pitch deck. Clean, modern and delivered fast.",
@@ -221,40 +256,6 @@ const services: Service[] = [
           "Branded & editable",
           "Business cards & letterhead",
           "Email signature",
-        ],
-      },
-    ],
-  },
-  {
-    num: "05",
-    title: "Brand Basics",
-    tag: "Strategy",
-    desc: "A clear name, message and visual direction for new businesses. No bloated strategy decks — just the essentials that help you show up consistently from day one.",
-    tiers: [
-      {
-        name: "Brand Starter",
-        price: "KES 12,000 – 20,000",
-        usd: "$90 – $150",
-        timeline: "3 – 5 working days",
-        features: [
-          "Name & tagline review",
-          "Color palette & fonts",
-          "Tone of voice doc",
-          "Social bio & profile setup",
-        ],
-      },
-      {
-        name: "Brand Foundation",
-        price: "KES 25,000 – 40,000",
-        usd: "$185 – $300",
-        timeline: "7 – 10 working days",
-        popular: true,
-        features: [
-          "Everything in Brand Starter",
-          "Logo design",
-          "One-page brand guide",
-          "Business card design",
-          "Social profile setup",
         ],
       },
     ],

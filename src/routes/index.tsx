@@ -34,13 +34,13 @@ const services = [
   {
     num: "04",
     title: "Brand Strategy & Basics",
-    desc: "Helping growing businesses define their brand direction, messaging and visual foundation before they build online.",
+    desc: "Helping growing businesses define their brand direction, messaging and visual foundation before building their digital presence.",
     tag: "Strategy · Identity · Positioning",
   },
   {
     num: "05",
     title: "Graphic Design",
-    desc: "Visual assets and creative systems that help your business communicate clearly and maintain a consistent identity.",
+    desc: "Visual identities and marketing assets that help your business communicate clearly and maintain a consistent brand.",
     tag: "Branding · Print · Social",
   },
 ];
@@ -390,7 +390,7 @@ function Home() {
           </div>
         ))}
       </div>
-      {/* Put it HERE - outside the teamGrid */}
+
       <div className={styles.teamDescription}>
         <p>
           Every project at Kavaro is a collaborative effort. Our designers and engineers work
