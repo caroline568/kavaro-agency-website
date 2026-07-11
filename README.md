@@ -1,4 +1,3 @@
-# trigger deployment
 # Kavaro Agency 🌐
 
 <p align="center">
