@@ -27,15 +27,15 @@ const services = [
   },
   {
     num: "03",
-    title: "AI Solutions",
-    desc: "Practical AI features, automation and intelligent tools integrated into your business where they create real value.",
-    tag: "LLMs · Automation · Integration",
-  },
-  {
-    num: "04",
     title: "Brand Strategy & Basics",
     desc: "Helping growing businesses define their brand direction, messaging and visual foundation before building their digital presence.",
     tag: "Strategy · Identity · Positioning",
+  },
+  {
+    num: "04",
+    title: "AI Solutions",
+    desc: "Practical AI features, automation and intelligent tools integrated into your business where they create real value.",
+    tag: "LLMs · Automation · Integration",
   },
   {
     num: "05",
