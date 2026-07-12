@@ -6,23 +6,28 @@ import { createClient } from "@supabase/supabase-js";
 //
 //   1. Create a new Supabase project at https://supabase.com
 //   2. Run the SQL in supabase/migrations/001_initial_schema.sql
+//      (and optionally 002_optional_additions.sql)
 //   3. Create an admin user in Supabase > Authentication > Users
-//   4. Replace the two fallback values below with the new project's
-//      URL and anon key (found in Project Settings > API)
-//   5. Update VITE_CALENDLY_URL fallback in index.tsx, contact.tsx,
-//      services.tsx to the new Calendly username
-//   6. Update hello.kavaro@gmail.com references in Navbar.tsx,
+//   4. Put the new project's URL + anon key in .env
+//      (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — see .env.example).
+//      Both are found in Project Settings > API.
+//   5. Update VITE_CALENDLY_URL in .env to the new Calendly event URL
+//   6. Update hello@kavaroagency.com references in Navbar.tsx,
 //      Footer.tsx, and api.ts to the new business email
 //
-// The anon key is safe to commit — it is designed to be public.
-// Supabase Row Level Security policies control what it can access.
+// The anon key is safe to ship to the browser — Supabase Row Level
+// Security policies control what it can actually access.
 
-const supabaseUrl =
-  import.meta.env.VITE_SUPABASE_URL || "https://ppdqofwkwyqsfqikeaiv.supabase.co";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const supabaseAnonKey =
-  import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwZHFvZndrd3lxc2ZxaWtlYWl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwODAzMjAsImV4cCI6MjA5NzY1NjMyMH0.5FPQDQxAMhq-6iOCvhXy28POvYOHqmaSCsn0nWWGeZ8";
+if (!supabaseUrl || !supabaseAnonKey) {
+  // Fail loudly rather than silently connecting to the wrong/no project.
+  throw new Error(
+    "Missing Supabase config. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY " +
+      "in your .env file (copy from .env.example).",
+  );
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
