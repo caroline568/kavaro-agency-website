@@ -19,10 +19,16 @@
 .emailLink { font-size: 13px; color: var(--gold); text-decoration: none; }
 .emailLink:hover { color: var(--gold-light); }
 
-.col h3 { font-size: 11px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
+.col h3 {
+  font-size:14px;
+  color:var(--white);
+  margin-bottom:18px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
 .col ul { list-style: none; }
 .col ul li { margin-bottom: 10px; }
-.col ul li a, .col ul li span { font-size: 13px; color: var(--grey-light); text-decoration: none; transition: color 0.2s; }
+.col ul li a, .col ul li span { font-size: 13px; color: var(--grey-light); text-decoration: none; transition: color 0.3s ease; }
 .col ul li a:hover { color: var(--white); }
 
 .bottom {

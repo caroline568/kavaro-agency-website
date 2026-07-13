@@ -7,10 +7,11 @@ import { PopupModal } from "react-calendly";
 import carolineImg from "@/assets/founder.png";
 import hezronImg from "@/assets/hezron.jpeg";
 import brendaImg from "@/assets/brenda.jpeg";
-import carolgroceryImg from "@/assets/Carol's grocery.png";
-import smargoImg from "@/assets/smargo-homepage.png";
+import carolgroceryImg from "@/assets/Carol's grocery.webp";
+import smargoImg from "@/assets/smargo-homepage.webp";
 import splashscreeImg from "@/assets/Splash Screen.png";
-import aireactImg from "@/assets/ai-react.png";
+
+import aireactImg from "@/assets/ai-react.webp";
 
 const services = [
   {

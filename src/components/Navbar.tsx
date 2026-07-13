@@ -41,7 +41,7 @@ export default function Navbar() {
 
       <div className={styles.navRight}>
         <a href="mailto:hello@kavaroagency.com" className={styles.email}>
-          hello@kavaroagency.com
+          ✉ hello@kavaroagency.com
         </a>
 
         <Link to="/contact" className={styles.cta}>
