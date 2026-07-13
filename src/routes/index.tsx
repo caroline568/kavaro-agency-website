@@ -491,8 +491,7 @@ function Home() {
                       className={styles.projImage}
                       loading="lazy"
                       decoding="async"
-                    />{" "}
-                    loading="lazy" /
+                    />
                   </div>
                 )}
                 <h3 className={styles.projTitle}>{p.title}</h3>
