@@ -295,8 +295,11 @@ function Home() {
           <img
             src={founderImg}
             alt="Founder of Kavaro Agency"
+            width={800}
+            height={1280}
             className={styles.vmImage}
             loading="lazy"
+            decoding="async"
           />
           <div className={styles.vmFounder}>
             <strong>Kavaro</strong>
@@ -381,7 +384,15 @@ function Home() {
         ].map((m) => (
           <div key={m.name} className={styles.teamCard}>
             <div className={styles.teamAvatar}>
-              <img src={m.image} alt={m.name} className={styles.teamImg} loading="lazy" />
+              <img
+                src={m.image}
+                alt={m.name}
+                width={800}
+                height={1280}
+                className={styles.teamImg}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
 
             <h4>{m.name}</h4>
@@ -471,7 +482,16 @@ function Home() {
               <div className={styles.projBody}>
                 {p.image && (
                   <div className={styles.projImageWrap}>
-                    <img src={p.image} alt={p.title} className={styles.projImage} loading="lazy" />
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      width={1360}
+                      height={768}
+                      className={styles.projImage}
+                      loading="lazy"
+                      decoding="async"
+                    />{" "}
+                    loading="lazy" /
                   </div>
                 )}
                 <h3 className={styles.projTitle}>{p.title}</h3>

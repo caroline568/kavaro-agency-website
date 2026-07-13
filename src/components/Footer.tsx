@@ -7,7 +7,13 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.brand}>
-          <img src={kavaroLogo} alt="Kavaro Agency logo" className={styles.logoImage} />
+          <img
+            src={kavaroLogo}
+            alt="Kavaro Agency logo"
+            width={1264}
+            height={843}
+            className={styles.logoImage}
+          />
           <p className={styles.desc}>
             A remote web development team designing and building modern websites and digital tools
             that help growing businesses attract customers, improve operations, and grow online.

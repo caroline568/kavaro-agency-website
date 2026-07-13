@@ -16,7 +16,13 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <Link to="/" className={styles.logo}>
-        <img src={kavaroLogo} alt="Kavaro" className="h-10 object-contain" />
+        <img
+          src={kavaroLogo}
+          alt="Kavaro"
+          width={1264}
+          height={843}
+          className="h-10 object-contain"
+        />
       </Link>
 
       <ul className={`${styles.links} ${menuOpen ? styles.open : ""}`}>
