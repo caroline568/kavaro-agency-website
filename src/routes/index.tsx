@@ -395,7 +395,7 @@ function Home() {
               />
             </div>
 
-            <h4>{m.name}</h4>
+            <h3>{m.name}</h3>
             <span className={styles.teamRole}>{m.role}</span>
             <p>{m.bio}</p>
           </div>
@@ -424,7 +424,7 @@ function Home() {
           {industries.map((i) => (
             <div className={styles.indCard} key={i.name}>
               <div className={styles.indIcon}>{i.icon}</div>
-              <h4>{i.name}</h4>
+              <h3>{i.name}</h3>
               <p>{i.desc}</p>
             </div>
           ))}
@@ -583,7 +583,7 @@ function Home() {
         <div className={styles.whyGrid}>
           {whyUs.map((w) => (
             <div className={styles.whyCard} key={w.title}>
-              <h4>{w.title}</h4>
+              <h3>{w.title}</h3>
               <p>{w.desc}</p>
             </div>
           ))}
@@ -602,7 +602,7 @@ function Home() {
           {steps.map((s) => (
             <div className={styles.step} key={s.num}>
               <div className={styles.stepN}>{s.num}</div>
-              <h4>{s.title}</h4>
+              <h3>{s.title}</h3>
               <p>{s.desc}</p>
             </div>
           ))}

@@ -23,7 +23,7 @@ export default function Footer() {
           </a>
         </div>
         <div className={styles.col}>
-          <h5>Services</h5>
+          <h3>Services</h3>
           <ul>
             <li>
               <Link to="/services">Web Development</Link>
@@ -43,7 +43,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className={styles.col}>
-          <h5>Company</h5>
+          <h3>Company</h3>
           <ul>
             <li>
               <Link to="/">About Us</Link>
@@ -54,7 +54,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className={styles.col}>
-          <h5>Contact</h5>
+          <h3>Contact</h3>
           <ul>
             <li>
               <a href="mailto:hello@kavaroagency.com">hello@kavaroagency.com</a>
