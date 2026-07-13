@@ -37,6 +37,12 @@ export default function Navbar() {
             </Link>
           </li>
         ))}
+
+        <li>
+          <Link to="/contact" className={styles.mobileCTA} onClick={() => setMenuOpen(false)}>
+            Start a Project
+          </Link>
+        </li>
       </ul>
 
       <div className={styles.navRight}>

@@ -1,4 +1,3 @@
-
 import sharp from "sharp";
 
 const images = [
@@ -10,10 +9,7 @@ const images = [
 for (const image of images) {
   const output = image.replace(/\.(png|jpg|jpeg)$/i, ".webp");
 
-  await sharp(image)
-    .resize(1200)
-    .webp({ quality: 80 })
-    .toFile(output);
+  await sharp(image).resize(1200).webp({ quality: 80 }).toFile(output);
 
   console.log(`Converted: ${image} → ${output}`);
 }
