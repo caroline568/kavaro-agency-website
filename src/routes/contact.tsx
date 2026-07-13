@@ -189,19 +189,19 @@ function Contact() {
           {/* ── LEFT: contact info ── */}
           <div className={styles.sidebar}>
             <div className={styles.sideCard}>
-              <h3>Email Us</h3>
+              <h2>Email Us</h2>
               <a href={`mailto:${BUSINESS_EMAIL}`} className={styles.sideEmail}>
                 {BUSINESS_EMAIL}
               </a>
               <p>We reply within 24 hours.</p>
             </div>
             <div className={styles.sideCard}>
-              <h3>Location</h3>
+              <h2>Location</h2>
               <p>Remote · Nairobi, Kenya</p>
               <p>Serving clients worldwide.</p>
             </div>
             <div className={styles.sideCard}>
-              <h3>What Happens Next</h3>
+              <h2>What Happens Next</h2>
               <ol className={styles.steps}>
                 <li>Fill in your details</li>
                 <li>Send a message or book a call</li>

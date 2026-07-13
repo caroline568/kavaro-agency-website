@@ -15,14 +15,14 @@
 .logo span { color: var(--gold); }
 .logoImage { display: block; max-width: 160px; margin-bottom: 18px; }
 
-.desc { font-size: 13px; color: var(--grey-mid); line-height: 1.8; max-width: 260px; margin-bottom: 12px; }
+.desc { font-size: 13px; color: var(--grey-light); line-height: 1.8; max-width: 260px; margin-bottom: 12px; }
 .emailLink { font-size: 13px; color: var(--gold); text-decoration: none; }
 .emailLink:hover { color: var(--gold-light); }
 
 .col h3 { font-size: 11px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
 .col ul { list-style: none; }
 .col ul li { margin-bottom: 10px; }
-.col ul li a, .col ul li span { font-size: 13px; color: var(--grey-mid); text-decoration: none; transition: color 0.2s; }
+.col ul li a, .col ul li span { font-size: 13px; color: var(--grey-light); text-decoration: none; transition: color 0.2s; }
 .col ul li a:hover { color: var(--white); }
 
 .bottom {
