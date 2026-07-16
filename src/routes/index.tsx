@@ -241,7 +241,10 @@ function Home() {
         <div className={styles.heroLeft}>
           <div className={styles.badge}>
             <span className={styles.dot} />
-            <p>Remote Digital Agency · Built in Nairobi</p>
+            <p>
+              Remote Digital Agency
+              <span> · Nairobi</span>
+            </p>
           </div>
           <h1>
             A Remote Digital Agency Building <em>Websites</em> &amp; Digital Tools

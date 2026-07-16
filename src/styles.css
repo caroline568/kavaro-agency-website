@@ -4,6 +4,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 :root {
   --navy: #0A1628;
   --navy-mid: #132240;

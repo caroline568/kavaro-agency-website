@@ -98,81 +98,191 @@
 .ctaBtns { display: flex; gap: 16px; justify-content: center; }
 .ctaBtns a { display: inline-block; }
 
+/* ===========================
+   TABLET + MOBILE RESPONSIVE
+=========================== */
+
 @media (max-width: 960px) {
+
+  /* HERO */
   .hero {
     grid-template-columns: 1fr;
     padding: 60px 24px;
-    gap: 48px;
+    gap: 40px;
     min-height: auto;
-    overflow: visible;
+    overflow: hidden;
+  }
+
+  .heroLeft,
+  .heroRight {
+    width: 100%;
+    min-width: 0;
   }
 
   .heroLeft h1 {
     font-size: 34px;
     line-height: 1.25;
     margin-bottom: 18px;
-    word-break: normal;
-    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .heroLeft p {
     max-width: 100%;
     font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .badge {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .badge p {
+    white-space: normal;
   }
 
   .heroBtns {
     width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .heroBtns a {
+  .heroBtns a,
+  .heroBtns button {
     width: 100%;
     text-align: center;
   }
 
-  .section { padding: 60px 24px; }
-  .svcGrid { grid-template-columns: 1fr; }
-  .coming { padding: 60px 24px; }
-  .comingInner { grid-template-columns: 1fr; gap: 48px; }
-  .whySec { padding: 60px 24px; }
-  .whyGrid { grid-template-columns: 1fr 1fr; }
-  .procSteps { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .procSteps::before { display: none; }
-  .ctaSec { padding: 60px 24px; }
-  .ctaSec h2 { font-size: 32px; }
+
+  /* HERO STATS */
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .statCard {
+    padding: 24px;
+  }
+
+
+  /* GENERAL SECTIONS */
+  .section {
+    padding: 60px 24px;
+  }
+
+
+  /* SERVICES */
+  .svcGrid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* COMING SECTION */
+  .coming {
+    padding: 60px 24px;
+  }
+
+  .comingInner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+
+  /* WHY SECTION */
+  .whySec {
+    padding: 60px 24px;
+  }
+
+  .whyGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+  /* PROCESS */
+  .procSteps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .procSteps::before {
+    display: none;
+  }
+
+
+  /* CTA */
+  .ctaSec {
+    padding: 60px 24px;
+  }
+
+  .ctaSec h2 {
+    font-size: 32px;
+  }
+
+
+  /* STORY SECTION */
+  .vmSec {
+    grid-template-columns: 1fr;
+    padding: 60px 24px;
+    gap: 40px;
+  }
+
 }
+
+
+
+/* ===========================
+   SMALL MOBILE
+=========================== */
+
 @media (max-width: 500px) {
-  .whyGrid { grid-template-columns: 1fr; }
-  .procSteps { grid-template-columns: 1fr; }
-  .ctaBtns { flex-direction: column; align-items: center; }
-}
 
-.vmSec { padding: 90px 60px; background: var(--white); display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; align-items: center; }
-.vmImageWrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2.5rem 0;
-  gap: 1rem;
-}
 
-.vmImage {
-  width: min(480px, 90vw);
-  aspect-ratio: 1 / 1;
-  border-radius: 28px;
-  object-fit: cover;
-  box-shadow: 0 50px 140px rgba(0, 0, 0, 0.5);
-  transform: translateY(-6px);
-}
-.vmFounder { text-align: center; margin-top: 20px; }
-.vmFounder strong { display: block; font-family: var(--font-serif); color: var(--navy); font-size: 16px; }
-.vmFounder span { font-size: 12px; color: var(--grey-mid); letter-spacing: 1px; text-transform: uppercase; }
-.vmCards { display: flex; flex-direction: column; gap: 24px; }
-.vmCard { border-left: 3px solid var(--gold); padding: 8px 0 8px 24px; }
-.vmCard h3 { font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-.vmCard p { font-size: 15px; color: var(--grey-dark); line-height: 1.8; font-weight: 300; }
-@media (max-width: 960px) {
-  .vmSec { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+  .hero {
+    padding: 40px 20px;
+  }
+
+
+  .heroLeft h1 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+
+  .heroLeft p {
+    font-size: 14px;
+  }
+
+
+  .badge p {
+    font-size: 11px;
+    letter-spacing: .5px;
+  }
+
+
+  .whyGrid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .procSteps {
+    grid-template-columns: 1fr;
+  }
+
+
+  .ctaBtns {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+
+  .vmImage {
+    width: 100%;
+    max-width: 360px;
+  }
+
+
 }
 
 /* Tech strip (replaces marquee role) */
