@@ -1,19 +1,136 @@
+/*
+  Services.module.css — Kavaro services page
+  --------------------------------------------------------------
+  Shares the same token system as Home.module.css. Assumes these
+  are already defined globally:
+
+    --navy, --navy-mid, --navy-border, --navy-light
+    --gold, --gold-light
+    --white
+    --grey-light, --grey-mid, --grey-dark, --grey-pale, --grey-bg
+    --font-serif, --font-sans
+
+  The page hero currently uses the global `.page-hero` class (shared
+  with other routes like /contact), not a local class — see the
+  explanation for an optional `.servicesHero` you can layer on top
+  of it. Button base styles (.btn-primary / .btn-secondary /
+  .btn-navy) live in your global stylesheet, not here.
+*/
+
 .section {
-  padding: 70px 60px;
+  padding: 96px 60px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 88px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-/* ── Service block ── */
+.heroBtns { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.heroBtns a, .heroBtns button { display: inline-block; }
+
+/* Optional local hero refinement — combine with the global page-hero
+   class if you want services-specific spacing (see explanation). */
+.servicesHero { max-width: 760px; margin: 0 auto; text-align: center; padding: 110px 24px 80px; }
+.servicesHero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.15; }
+.servicesHero p { font-size: 16px; line-height: 1.8; max-width: 52ch; margin: 20px auto 0; }
+
+/* ==========================================================
+   SHARED SECTION HEADINGS
+   ========================================================== */
+.secH {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.secSub {
+  font-size: 15px;
+  color: var(--grey-mid);
+  line-height: 1.75;
+  max-width: 56ch;
+  margin-bottom: 48px;
+}
+
+/* ==========================================================
+   CAPABILITIES OVERVIEW
+   ========================================================== */
+.capSection { padding: 96px 60px; max-width: 1280px; margin: 0 auto; }
+.capGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+.capCard {
+  background: var(--white);
+  border: 1px solid var(--grey-pale);
+  border-radius: 4px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.capCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 16px 32px -22px rgba(10, 25, 41, 0.2);
+}
+.capNum {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+.capCard h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+.capRow { margin-top: 16px; }
+.capRow:first-of-type { margin-top: 0; }
+.capLabel {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.capRow p { font-size: 14px; color: var(--grey-dark); line-height: 1.7; font-weight: 300; }
+.capLink {
+  display: inline-block;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--grey-pale);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+.capLink:hover { color: var(--gold); }
+.capLink:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ==========================================================
+   SERVICE BLOCK (pricing detail)
+   ========================================================== */
 .serviceBlock {
   border-top: 1px solid var(--grey-pale);
-  padding-top: 48px;
+  padding-top: 56px;
+  scroll-margin-top: 32px; /* keeps anchor-linked sections clear of any fixed header */
 }
 
-.serviceHead {
-  margin-bottom: 32px;
-}
+.serviceHead { margin-bottom: 36px; }
 
 .serviceHeadLeft {
   display: flex;
@@ -34,13 +151,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
 .title {
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: clamp(22px, 2.4vw, 27px);
   font-weight: 700;
   color: var(--navy);
   line-height: 1.2;
@@ -60,7 +177,7 @@
 .desc {
   font-size: 14px;
   color: var(--grey-mid);
-  line-height: 1.75;
+  line-height: 1.8;
   max-width: 680px;
   margin: 0;
 }
@@ -79,13 +196,12 @@
   padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 0;
   position: relative;
+  transition: transform 0.25s ease;
 }
+.tierCard:hover { transform: translateY(-3px); }
 
-.tierPopular {
-  background: var(--navy);
-}
+.tierPopular { background: var(--navy); }
 
 .popularBadge {
   position: absolute;
@@ -108,10 +224,7 @@
   margin-bottom: 16px;
   margin-top: 12px;
 }
-
-.tierPopular .tierName {
-  color: var(--white);
-}
+.tierPopular .tierName { color: var(--white); }
 
 .tierPrice {
   font-family: var(--font-serif);
@@ -120,21 +233,10 @@
   color: var(--navy);
   line-height: 1.1;
 }
+.tierPopular .tierPrice { color: var(--gold); }
 
-.tierPopular .tierPrice {
-  color: var(--gold);
-}
-
-.tierUsd {
-  font-size: 12px;
-  color: var(--grey-mid);
-  margin-top: 4px;
-  margin-bottom: 8px;
-}
-
-.tierPopular .tierUsd {
-  color: var(--grey-light);
-}
+.tierUsd { font-size: 12px; color: var(--grey-mid); margin-top: 4px; margin-bottom: 8px; }
+.tierPopular .tierUsd { color: var(--grey-light); }
 
 .tierTimeline {
   font-size: 11px;
@@ -146,10 +248,7 @@
   padding-bottom: 20px;
   border-bottom: 1px solid var(--grey-pale);
 }
-
-.tierPopular .tierTimeline {
-  border-bottom-color: var(--navy-border);
-}
+.tierPopular .tierTimeline { border-bottom-color: var(--navy-border); }
 
 .tierFeatures {
   list-style: none;
@@ -160,21 +259,10 @@
   gap: 10px;
   flex: 1;
 }
-
-.tierFeatures li {
-  font-size: 13px;
-  color: var(--grey-dark);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.tierPopular .tierFeatures li {
-  color: var(--grey-light);
-}
-
+.tierFeatures li { font-size: 13px; color: var(--grey-dark); display: flex; align-items: center; gap: 10px; }
+.tierPopular .tierFeatures li { color: var(--grey-light); }
 .tierFeatures li::before {
-  content: '';
+  content: "";
   width: 5px;
   height: 5px;
   background: var(--gold);
@@ -182,38 +270,103 @@
   border-radius: 50%;
 }
 
-.tierActions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: auto;
-}
+.tierActions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
 
-/* Popular card button overrides */
-.tierPopular .btn-navy {
+/* Popular card button override — wrapped in :global() so it actually
+   targets the global .btn-navy class (the original selector here
+   would otherwise be scoped and silently do nothing). */
+.tierPopular :global(.btn-navy) {
   background: var(--navy-mid);
   border-color: var(--navy-border);
 }
+.tierPopular :global(.btn-navy:hover) { background: var(--navy-light); }
 
-.tierPopular .btn-navy:hover {
-  background: var(--navy-light);
+/* ==========================================================
+   TRUST SECTION (process / tech / industries / reasons)
+   ========================================================== */
+.trustSection { padding: 88px 60px; max-width: 1280px; margin: 0 auto; }
+
+/* Process timeline */
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+  position: relative;
+}
+.processGrid::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: var(--grey-pale);
+}
+.processStep { text-align: center; padding: 0 12px; position: relative; z-index: 1; }
+.processNum {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--grey-pale);
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--navy);
+}
+.processStep h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.processStep p { font-size: 13px; color: var(--grey-mid); line-height: 1.7; }
+
+/* Technology + industries — presented as quiet trust indicators,
+   not a developer-portfolio tag cloud. */
+.trustGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+.techList { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.techItem {
+  font-size: 12px;
+  color: var(--grey-dark);
+  background: var(--grey-bg);
+  border: 1px solid var(--grey-pale);
+  padding: 7px 14px;
+  letter-spacing: 0.3px;
 }
 
-/* ── Custom section ── */
+/* Why Kavaro reasons */
+.reasonsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1px;
+  background: var(--grey-pale);
+  margin-top: 40px;
+}
+.reasonCard { background: var(--grey-bg); padding: 28px 24px; }
+.reasonCard h3 { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.reasonCard p { font-size: 13px; color: var(--grey-mid); line-height: 1.7; }
+
+/* ==========================================================
+   CUSTOM / FINAL CTA
+   ========================================================== */
 .customSection {
   background: var(--navy);
-  padding: 70px 60px;
+  padding: 96px 60px;
   text-align: center;
 }
-
 .customSection h2 {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: clamp(28px, 4vw, 40px);
   font-weight: 700;
   color: var(--white);
   margin-bottom: 16px;
+  line-height: 1.2;
 }
-
+.customSection h2 em { font-style: italic; color: var(--gold); }
 .customSection p {
   font-size: 15px;
   color: var(--grey-light);
@@ -222,35 +375,52 @@
   line-height: 1.8;
   font-weight: 300;
 }
+.ctaBtns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.ctaBtns a, .ctaBtns button { display: inline-block; }
 
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .section {
-    padding: 48px 24px;
-    gap: 56px;
-  }
+/* ==========================================================
+   ACCESSIBILITY / MOTION
+   ========================================================== */
+.capLink:focus-visible,
+.tierCard :global(a:focus-visible),
+.tierCard :global(button:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
 
-  .serviceHeadLeft {
-    flex-direction: column;
-    gap: 12px;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .capCard, .tierCard { transition: none !important; }
+}
 
-  .tiersGrid {
-    grid-template-columns: 1fr;
-  }
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 960px) {
+  .section { padding: 64px 24px; gap: 64px; }
+  .capSection { padding: 64px 24px; }
+  .capGrid { grid-template-columns: 1fr; }
 
-  .customSection {
-    padding: 60px 24px;
-  }
+  .servicesHero { padding: 72px 24px 56px; }
+
+  .serviceHeadLeft { flex-direction: column; gap: 12px; }
+  .tiersGrid { grid-template-columns: 1fr; }
+
+  .trustSection { padding: 64px 24px; }
+  .trustGrid { grid-template-columns: 1fr; gap: 40px; }
+  .processGrid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .processGrid::before { display: none; }
+  .reasonsGrid { grid-template-columns: 1fr 1fr; }
+
+  .customSection { padding: 64px 24px; }
 }
 
 @media (max-width: 500px) {
-  .tierActions {
-    flex-direction: column;
-  }
+  .processGrid { grid-template-columns: 1fr; }
+  .reasonsGrid { grid-template-columns: 1fr; }
 
-  .tierActions a {
-    width: 100%;
-    justify-content: center;
-  }
+  .tierActions { flex-direction: column; }
+  .tierActions a, .tierActions button { width: 100%; justify-content: center; text-align: center; }
+
+  .ctaBtns { flex-direction: column; align-items: stretch; }
+  .heroBtns { flex-direction: column; align-items: stretch; }
 }
