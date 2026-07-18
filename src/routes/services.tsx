@@ -89,11 +89,12 @@ const capabilities: Capability[] = [
     num: "04",
     title: "Digital Transformation",
     problem:
-      "Many established businesses still run on phone calls, spreadsheets, and paper — even as customers expect more.",
+      "Many growing businesses don't yet have a consistent brand or digital presence — making it harder for customers to find, trust, and remember them.",
     approach:
-      "We combine strategy, design, and engineering to help traditional businesses move core parts of their operation online, deliberately and in stages.",
+      "We build the brand foundation and visual identity a growing business needs — logo, guidelines, and digital-ready assets — as the deliberate first step toward a stronger digital presence.",
     outcome:
-      "A more efficient business, and a customer experience that matches the trust you've already earned.",
+      "A consistent, credible brand across every touchpoint, and a foundation ready to build a full website or product on.",
+    anchor: "transformation",
   },
 ];
 
@@ -238,45 +239,10 @@ const services: Service[] = [
   },
   {
     num: "04",
-    id: "brand",
-    title: "Brand Foundations",
-    tag: "Strategy",
-    desc: "A clear name, message and visual direction for new businesses — the essentials that help you show up consistently from day one, without a bloated strategy deck.",
-    tiers: [
-      {
-        name: "Brand Starter",
-        price: "KES 12,000 – 20,000",
-        usd: "$90 – $150",
-        timeline: "3 – 5 working days",
-        features: [
-          "Name & tagline review",
-          "Color palette & fonts",
-          "Tone of voice doc",
-          "Social bio & profile setup",
-        ],
-      },
-      {
-        name: "Brand Foundation",
-        price: "KES 25,000 – 40,000",
-        usd: "$185 – $300",
-        timeline: "7 – 10 working days",
-        popular: true,
-        features: [
-          "Everything in Brand Starter",
-          "Logo design",
-          "One-page brand guide",
-          "Business card design",
-          "Social profile setup",
-        ],
-      },
-    ],
-  },
-  {
-    num: "05",
-    id: "graphic",
-    title: "Graphic Design",
-    tag: "Design",
-    desc: "Visual assets that make your business look credible and consistent — from a first logo to a full pitch deck. Clean, modern, and delivered fast.",
+    id: "transformation",
+    title: "Digital Transformation",
+    tag: "Transformation",
+    desc: "Brand, identity, and visual assets for businesses taking their first deliberate step online — the foundation that makes everything else (a website, social presence, marketing) look credible and consistent from day one.",
     tiers: [
       {
         name: "Social Media Pack",
@@ -291,26 +257,27 @@ const services: Service[] = [
         ],
       },
       {
-        name: "Logo + Brand Kit",
-        price: "KES 12,000 – 20,000",
-        usd: "$90 – $150",
-        timeline: "4 – 7 working days",
+        name: "Brand Foundation",
+        price: "KES 25,000 – 40,000",
+        usd: "$185 – $300",
+        timeline: "7 – 10 working days",
         popular: true,
         features: [
-          "Logo (3 concepts)",
+          "Logo design (3 concepts)",
           "Color palette & fonts",
-          "Brand guide PDF",
-          "All file formats",
+          "One-page brand guide",
+          "Business card design",
+          "Social profile setup",
         ],
       },
       {
-        name: "Pitch Deck / Stationery",
-        price: "KES 10,000 – 18,000",
-        usd: "$75 – $135",
-        timeline: "3 – 6 working days",
+        name: "Full Brand & Stationery",
+        price: "KES 25,000 – 45,000",
+        usd: "$185 – $335",
+        timeline: "7 – 12 working days",
         features: [
-          "10 – 15 slide deck",
-          "Branded & editable",
+          "Everything in Brand Foundation",
+          "Pitch deck (10 – 15 slides)",
           "Business cards & letterhead",
           "Email signature",
         ],

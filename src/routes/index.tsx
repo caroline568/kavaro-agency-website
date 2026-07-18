@@ -16,15 +16,15 @@ import aireactImg from "@/assets/ai-react.webp";
 const services = [
   {
     num: "01",
-    title: "Web Development",
-    desc: "Fast, scalable websites and web applications built with modern engineering — from landing pages and booking flows to full dashboards.",
-    tag: "React · Node.js · TypeScript",
+    title: "Digital Product Design",
+    desc: "User experiences designed around real customer needs — researched, prototyped, and refined before a single line of code is written.",
+    tag: "Figma · Prototyping · Research",
   },
   {
     num: "02",
-    title: "Product Design",
-    desc: "User experiences designed around real customer needs — researched, prototyped, and refined before a single line of code is written.",
-    tag: "Figma · Prototyping · Research",
+    title: "Web Development",
+    desc: "Fast, scalable websites and web applications built with modern engineering — from landing pages and booking flows to full dashboards.",
+    tag: "React · Node.js · TypeScript",
   },
   {
     num: "03",
@@ -34,15 +34,9 @@ const services = [
   },
   {
     num: "04",
-    title: "Brand Strategy",
-    desc: "A clear brand direction, message, and visual foundation for businesses that are ready to build a real digital presence.",
-    tag: "Strategy · Identity · Positioning",
-  },
-  {
-    num: "05",
-    title: "Graphic Design",
-    desc: "Visual identities and marketing assets that keep your business communicating clearly and consistently, everywhere.",
-    tag: "Branding · Print · Social",
+    title: "Digital Transformation",
+    desc: "Brand, identity, and visual assets for businesses taking their first deliberate step online — the foundation everything else is built on.",
+    tag: "Branding · Identity · Digital Presence",
   },
 ];
 const techStack = ["React", "Node.js", "TypeScript", "Vercel"];
