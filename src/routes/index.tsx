@@ -45,23 +45,61 @@ export const Route = createFileRoute("/")({
   component: Home,
   head: () => ({
     meta: [
-      { title: "Kavaro Agency - Digital Product & Web Development Agency" },
-
+      { title: "Kavaro Agency — Digital Product Studio in Nairobi, Kenya" },
       {
         name: "description",
         content:
-          "Kavaro is a remote digital agency specializing in modern web development, UI/UX design, and AI-powered solutions that help businesses build, launch, and grow online.",
+          "Kavaro Agency is a digital product studio in Nairobi, Kenya — building websites, web apps, and AI tools with thoughtful design and dependable engineering.",
       },
-
       {
         property: "og:title",
-        content: "Kavaro Agency | Web Development & Digital Solutions",
+        content: "Kavaro Agency — Digital Product Studio in Nairobi, Kenya",
       },
-
       {
         property: "og:description",
         content:
-          "A remote digital agency building modern websites, web apps, and AI-ready digital experiences.",
+          "A digital product studio in Nairobi, Kenya, building websites, web apps, and AI-powered tools with thoughtful design and dependable engineering.",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Kavaro Agency",
+          url: "https://www.kavaroagency.com",
+          description:
+            "Kavaro Agency is a digital product studio in Nairobi, Kenya, building websites, web applications, and AI-powered tools with thoughtful design and dependable engineering.",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Nairobi",
+            addressCountry: "KE",
+          },
+          areaServed: "Worldwide",
+          founder: {
+            "@type": "Person",
+            name: "Caroline Njogu",
+          },
+          makesOffer: [
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Digital Product Design" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Web Development" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "AI Solutions" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Digital Transformation" },
+            },
+          ],
+        }),
       },
     ],
   }),
