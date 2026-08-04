@@ -26,19 +26,16 @@ export default function Footer() {
           <h3>Services</h3>
           <ul>
             <li>
-              <Link to="/services">Web Development</Link>
+              <Link to="/services">Digital Product Design</Link>
             </li>
             <li>
-              <Link to="/services">UI / UX Design</Link>
+              <Link to="/services">Web Development</Link>
             </li>
             <li>
               <Link to="/services">AI-Powered Solutions</Link>
             </li>
             <li>
-              <Link to="/services">Business Websites</Link>
-            </li>
-            <li>
-              <Link to="/services">Brand & Visual Design</Link>
+              <Link to="/services">Digital Transformation</Link>
             </li>
           </ul>
         </div>
@@ -58,6 +55,9 @@ export default function Footer() {
           <ul>
             <li>
               <a href="mailto:hello@kavaroagency.com">hello@kavaroagency.com</a>
+            </li>
+            <li>
+              <a href="whatsapp:+254737821126">+254737821126</a>
             </li>
             <li>
               <a
