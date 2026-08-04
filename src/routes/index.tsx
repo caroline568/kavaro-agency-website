@@ -7,9 +7,9 @@ import { PopupModal } from "react-calendly";
 import carolineImg from "@/assets/founder.png";
 import hezronImg from "@/assets/hezron.jpeg";
 import brendaImg from "@/assets/brenda.jpeg";
-import carolgroceryImg from "@/assets/Carol's grocery.webp";
+import smartImg from "@/assets/S Mart.png";
 import smargoImg from "@/assets/smargo-homepage.webp";
-import splashscreeImg from "@/assets/Splash Screen.png";
+import virtualConsultationImg from "@/assets/Virtual Consultation.png";
 
 import aireactImg from "@/assets/ai-react.webp";
 
@@ -190,7 +190,7 @@ const projects = [
     outcome:
       "Concept prototype reduces booking friction to 3 taps. Designed mobile-first for low-bandwidth use.",
     accent: "linear-gradient(135deg, #1e3a5f, #0a1929)",
-    image: splashscreeImg,
+    image: virtualConsultationImg,
   },
   {
     title: "Smargo - Farm-to-Institution Marketplace",
@@ -207,17 +207,18 @@ const projects = [
     link: "https://smargo.vercel.app",
   },
   {
-    title: "Carol’s Smart Grocery App",
+    title: "S Mart",
     type: "UI/UX Design Project",
     problem:
-      "Designed a smart grocery shopping experience to improve user convenience and digital ordering flow.",
+      "Designed a mobile grocery shopping experience that makes it easy for customers to browse products, discover special offers, and order everyday essentials.",
     solution:
-      "Created a full UI/UX design system with user flows, wireframes and interactive prototype in Figma.",
-    tools: ["Figma", "UX Design", "Prototyping"],
-    outcome: "Complete mobile app design prototype showcasing modern grocery shopping experience.",
-    accent: "linear-gradient(135deg, #4a2d5f, #1a0f2a)",
-    image: carolgroceryImg,
-    link: "https://www.figma.com/proto/2DaNeg6c0ujjkAvPKUCtOt/Carol-s-Smart-App-Project?node-id=8-107&t=5xigjoMiqZYb2100-1",
+      "Designed a complete mobile shopping experience in Figma, including user flows, wireframes, high-fidelity screens, and an interactive prototype focused on simplicity and usability.",
+    tools: ["Figma", "UI Design", "UX Design", "Prototyping"],
+    outcome:
+      "Created a modern grocery shopping app prototype with intuitive navigation, product browsing, promotions, and a streamlined shopping experience.",
+    accent: "linear-gradient(135deg, #4CAF50, #2E7D32)",
+    image: smartImg,
+    link: "https://www.figma.com/proto/2DaNeg6c0ujjkAvPKUCtOt/Smart-App?node-id=61-61&t=OrQQHqf2bCYb9PeB-1",
   },
   {
     title: "AI Customer Assistant - Demo",
