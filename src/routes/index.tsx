@@ -45,20 +45,22 @@ export const Route = createFileRoute("/")({
   component: Home,
   head: () => ({
     meta: [
-      { title: "Kavaro Agency — Digital Product Studio in Nairobi, Kenya" },
+      {
+        title: "Kavaro Agency | Digital Product Design, Web Development & AI Solutions",
+      },
       {
         name: "description",
         content:
-          "Kavaro Agency is a digital product studio in Nairobi, Kenya — building websites, web apps, and AI tools with thoughtful design and dependable engineering.",
+          "Kavaro Agency is a Kenya-based digital product and technology agency helping businesses create impactful digital solutions through Digital Product Design, Web Development, AI-Powered Solutions, and Digital Transformation.",
       },
       {
         property: "og:title",
-        content: "Kavaro Agency — Digital Product Studio in Nairobi, Kenya",
+        content: "Kavaro Agency | Digital Product Design, Web Development & AI Solutions",
       },
       {
         property: "og:description",
         content:
-          "A digital product studio in Nairobi, Kenya, building websites, web apps, and AI-powered tools with thoughtful design and dependable engineering.",
+          "We design and build digital products, modern web solutions, and AI-powered experiences that help businesses solve real challenges and grow in a digital world.",
       },
     ],
     scripts: [
