@@ -300,8 +300,8 @@ function Home() {
           <div className={styles.badge}>
             <span className={styles.dot} />
             <p>
-              Digital Product Studio
-              <span> · Nairobi, Kenya</span>
+              Digital Product & Technology Agency
+              <span> · Kenya</span>
             </p>
           </div>
           <h1>
