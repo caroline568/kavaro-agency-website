@@ -418,7 +418,7 @@ function Services() {
 
       {/* 1. HERO */}
       <header className="page-hero">
-        <div className="section-label">Digital Product Studio · Kenya</div>
+        <div className="section-label">Digital Product & Technology Agency · Kenya</div>
         <h1>
           Digital Experiences Designed to Help <em>Ambitious Businesses Grow.</em>
         </h1>

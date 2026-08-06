@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
       <div className={styles.bottom}>
         <p>&copy; {new Date().getFullYear()} Kavaro Agency. All rights reserved.</p>
-        <p>Remote · Nairobi, Kenya</p>
+        <p>Remote ·Kenya</p>
       </div>
     </footer>
   );
