@@ -197,7 +197,7 @@ function Contact() {
             </div>
             <div className={styles.sideCard}>
               <h2>Location</h2>
-              <p>Remote · Nairobi, Kenya</p>
+              <p>Remote · Kenya</p>
               <p>Serving clients worldwide.</p>
             </div>
             <div className={styles.sideCard}>
