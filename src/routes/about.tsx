@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import founderImg from "@/assets/founder.png";
 import { team } from "@/data/team";
-import { storyParagraphs, journeySteps, visionMission } from "@/data/story";
+import { storyParagraphs, journeySteps, visionMission, values } from "@/data/story";
 import styles from "./About.module.css";
 
 export const Route = createFileRoute("/about")({
@@ -109,6 +109,20 @@ function About() {
             <h3>Our Mission</h3>
             <p>{visionMission.mission}</p>
           </div>
+        </div>
+      </section>
+
+      {/* 4b. VALUES */}
+      <section className={styles.section}>
+        <div className="section-label">What We Stand On</div>
+        <h2 className={styles.secH}>Our Values</h2>
+        <div className={styles.journeyGrid}>
+          {values.map((v) => (
+            <div className={styles.journeyStep} key={v.title}>
+              <h3>{v.title}</h3>
+              <p>{v.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
