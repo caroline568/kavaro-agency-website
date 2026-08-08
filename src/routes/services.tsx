@@ -8,20 +8,24 @@ export const Route = createFileRoute("/services")({
   component: Services,
   head: () => ({
     meta: [
-      { title: "Services & Pricing — Kavaro Agency | Digital Product Studio" },
+      {
+        title:
+          "Services & Pricing — Kavaro Agency | Digital Product Design, Web Development & AI Solutions",
+      },
       {
         name: "description",
         content:
-          "Kavaro is a Kenya-founded digital product studio offering UI/UX design, web development, AI solutions and digital transformation — with transparent, fixed pricing in KES and USD.",
+          "Kavaro Agency is a Kenya-based digital product studio offering Digital Product Design, Web Development, AI-Powered Solutions, and Digital Transformation for growing businesses.",
       },
       {
         property: "og:title",
-        content: "Services & Pricing — Kavaro Agency",
+        content:
+          "Services & Pricing — Kavaro Agency | Digital Product Design, Web Development & AI Solutions",
       },
       {
         property: "og:description",
         content:
-          "UI/UX design, web development, and AI solutions from a Kenya-founded digital product studio. Transparent, fixed pricing.",
+          "Digital Product Design, Web Development, and AI-Powered Solutions from a Kenya-based digital product studio.",
       },
     ],
   }),
@@ -418,7 +422,7 @@ function Services() {
 
       {/* 1. HERO */}
       <header className="page-hero">
-        <div className="section-label">Digital Product & Technology Agency · Kenya</div>
+        <div className="section-label">Digital Product Studio · Kenya</div>
         <h1>
           Digital Experiences Designed to Help <em>Ambitious Businesses Grow.</em>
         </h1>

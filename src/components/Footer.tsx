@@ -43,10 +43,13 @@ export default function Footer() {
           <h3>Company</h3>
           <ul>
             <li>
-              <Link to="/">About Us</Link>
+              <Link to="/about">About Us</Link>
             </li>
             <li>
-              <Link to="/services">Our Work</Link>
+              <Link to="/work">Our Work</Link>
+            </li>
+            <li>
+              <Link to="/blog">Blog</Link>
             </li>
           </ul>
         </div>
@@ -69,6 +72,11 @@ export default function Footer() {
               </a>
             </li>
             <li>
+              <a href="https://www.linkedin.com/in/carolinenjogu" target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+            </li>
+            <li>
               <span>Nairobi, Kenya</span>
             </li>
           </ul>
@@ -76,7 +84,12 @@ export default function Footer() {
       </div>
       <div className={styles.bottom}>
         <p>&copy; {new Date().getFullYear()} Kavaro Agency. All rights reserved.</p>
-        <p>Remote ·Kenya</p>
+        <p className={styles.legalLinks}>
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <span> · </span>
+          <Link to="/terms-of-use">Terms of Use</Link>
+        </p>
+        <p>Remote · Nairobi, Kenya</p>
       </div>
     </footer>
   );
