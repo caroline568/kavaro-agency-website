@@ -1,0 +1,145 @@
+.wrap {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 640px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Confetti burst */
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.piece {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  opacity: 0;
+  animation: fall 2.6s ease-in forwards;
+}
+.piece:nth-child(1) { left: 8%; background: var(--gold); animation-delay: 0.1s; transform: rotate(10deg); }
+.piece:nth-child(2) { left: 18%; background: #ef8fa4; animation-delay: 0.3s; border-radius: 50%; }
+.piece:nth-child(3) { left: 28%; background: var(--gold-light); animation-delay: 0s; }
+.piece:nth-child(4) { left: 38%; background: #7ec4cf; animation-delay: 0.45s; border-radius: 50%; }
+.piece:nth-child(5) { left: 50%; background: var(--gold); animation-delay: 0.15s; }
+.piece:nth-child(6) { left: 60%; background: #7ec4cf; animation-delay: 0.35s; }
+.piece:nth-child(7) { left: 70%; background: var(--gold-light); animation-delay: 0.05s; border-radius: 50%; }
+.piece:nth-child(8) { left: 80%; background: #ef8fa4; animation-delay: 0.5s; }
+.piece:nth-child(9) { left: 90%; background: var(--gold); animation-delay: 0.25s; border-radius: 50%; }
+.piece:nth-child(10) { left: 46%; background: #7ec4cf; animation-delay: 0.6s; }
+.piece:nth-child(11) { left: 14%; background: var(--gold-light); animation-delay: 0.55s; border-radius: 50%; }
+.piece:nth-child(12) { left: 65%; background: #ef8fa4; animation-delay: 0.2s; }
+
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(70vh) rotate(340deg); }
+}
+
+/* Success check */
+.checkWrap {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  opacity: 0;
+  animation: ping 1.8s ease-out infinite;
+}
+.ring2 { animation-delay: 0.6s; }
+@keyframes ping {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.checkCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.15s;
+  position: relative;
+  z-index: 1;
+}
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.checkCircle svg { width: 34px; height: 34px; stroke: var(--navy); }
+
+.wobble { display: inline-block; animation: wobble 2.4s ease-in-out infinite; }
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+.h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.h1 em { font-style: italic; color: var(--gold); }
+
+.p { margin-top: 16px; font-size: 15px; color: var(--grey-mid); line-height: 1.8; font-weight: 300; }
+
+.card {
+  margin-top: 36px;
+  background: var(--grey-bg);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: left;
+}
+.card h2 {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.stepRow { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; font-size: 14px; color: var(--grey-dark); line-height: 1.7; }
+.stepRow:last-child { margin-bottom: 0; }
+.stepNum {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta { margin-top: 36px; }
+
+@media (max-width: 600px) {
+  .wrap { min-height: auto; padding: 48px 20px; }
+}

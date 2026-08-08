@@ -4,7 +4,7 @@ import founderImg from "@/assets/founder.png";
 import styles from "./Home.module.css";
 import { PopupModal } from "react-calendly";
 import { team } from "@/data/team";
-import { storyParagraphs, visionMission } from "@/data/story";
+import { storyParagraphs, visionMission, values } from "@/data/story";
 import { projects } from "@/data/projects";
 
 const services = [
@@ -150,29 +150,6 @@ const skills = [
   "AI Integration",
   "API Development",
   "Accessibility",
-];
-
-const whyUs = [
-  {
-    title: "Engineering Quality",
-    desc: "Code you can hand off, extend, and trust — built fast, secure, and scalable using modern engineering practices.",
-  },
-  {
-    title: "Human-Centered Design",
-    desc: "Interfaces people actually understand and enjoy using — designed from real research, not just how something looks in a mockup.",
-  },
-  {
-    title: "Practical AI",
-    desc: "Less repetitive work and better decisions — AI added only where it creates measurable value, never for its own sake.",
-  },
-  {
-    title: "A Security Mindset",
-    desc: "Security built in from day one, not bolted on later — informed by real cybersecurity practice across authentication and data handling.",
-  },
-  {
-    title: "Business Understanding",
-    desc: "Solutions that solve the right problem, not just a technical one — because we take the time to understand how your business actually works.",
-  },
 ];
 
 const steps = [
@@ -400,7 +377,7 @@ function Home() {
           products built intentionally are the ones that last.
         </p>
         <div className={styles.whyGrid}>
-          {whyUs.map((w) => (
+          {values.map((w) => (
             <div className={styles.whyCard} key={w.title}>
               <h3>{w.title}</h3>
               <p>{w.desc}</p>

@@ -54,3 +54,29 @@ export const visionMission = {
   mission:
     "To design and build modern websites, web applications, and digital tools that help growing businesses connect with customers, operate better, and grow online through thoughtful design and reliable engineering.",
 };
+
+// Kavaro's operating principles — shown as "Why Kavaro" on the homepage
+// and as "Our Values" on the About page. Kept as one shared list so both
+// sections say the same thing.
+export const values = [
+  {
+    title: "Engineering Quality",
+    desc: "Code you can hand off, extend, and trust — built fast, secure, and scalable using modern engineering practices.",
+  },
+  {
+    title: "Human-Centered Design",
+    desc: "Interfaces people actually understand and enjoy using — designed from real research, not just how something looks in a mockup.",
+  },
+  {
+    title: "Practical AI",
+    desc: "Less repetitive work and better decisions — AI added only where it creates measurable value, never for its own sake.",
+  },
+  {
+    title: "A Security Mindset",
+    desc: "Security built in from day one, not bolted on later — informed by real cybersecurity practice across authentication and data handling.",
+  },
+  {
+    title: "Business Understanding",
+    desc: "Solutions that solve the right problem, not just a technical one — because we take the time to understand how your business actually works.",
+  },
+];
