@@ -9,7 +9,10 @@ export default function Navbar() {
 
   const links = [
     { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
     { to: "/services", label: "Services" },
+    { to: "/work", label: "Work" },
+    { to: "/blog", label: "Blog" },
     { to: "/contact", label: "Contact" },
   ] as const;
 

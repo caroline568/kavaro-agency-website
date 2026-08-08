@@ -3,15 +3,9 @@ import { useState } from "react";
 import founderImg from "@/assets/founder.png";
 import styles from "./Home.module.css";
 import { PopupModal } from "react-calendly";
-
-import carolineImg from "@/assets/founder.png";
-import hezronImg from "@/assets/hezron.jpeg";
-import brendaImg from "@/assets/brenda.jpeg";
-import smartImg from "@/assets/S Mart.png";
-import smargoImg from "@/assets/smargo-homepage.webp";
-import virtualConsultationImg from "@/assets/Virtual Consultation.png";
-
-import aireactImg from "@/assets/ai-react.webp";
+import { team } from "@/data/team";
+import { storyParagraphs, visionMission } from "@/data/story";
+import { projects } from "@/data/projects";
 
 const services = [
   {
@@ -39,7 +33,7 @@ const services = [
     tag: "Branding · Identity · Digital Presence",
   },
 ];
-const techStack = ["React", "Node.js", "TypeScript", "Vercel"];
+const techStack = ["React", "Next.js", "Node.js", "TypeScript", "Vercel"];
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -51,7 +45,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Kavaro Agency is a Kenya-based digital product and technology agency helping businesses create impactful digital solutions through Digital Product Design, Web Development, AI-Powered Solutions, and Digital Transformation.",
+          "Kavaro is a Kenya-founded digital product studio helping businesses create impactful digital solutions through Digital Product Design, Web Development, AI-Powered Solutions, and Digital Transformation.",
       },
       {
         property: "og:title",
@@ -146,7 +140,8 @@ const industries = [
 ];
 const skills = [
   "Full-Stack Web Development",
-  "React & TypeScript",
+  "React & Next.js",
+  "TypeScript",
   "Node.js & Express",
   "Python",
   "UI / UX Design",
@@ -180,62 +175,6 @@ const whyUs = [
   },
 ];
 
-const projects = [
-  {
-    title: "Healthcare Booking - Concept",
-    type: "Concept Website",
-    problem:
-      "Local clinics in Nairobi rely on phone calls for appointments - patients wait, lines drop, no-shows are high.",
-    solution:
-      "A clean booking site with doctor profiles, time-slot picker, SMS reminders and a simple admin view.",
-    tools: ["Figma", "React", "Tailwind", "Supabase"],
-    outcome:
-      "Concept prototype reduces booking friction to 3 taps. Designed mobile-first for low-bandwidth use.",
-    accent: "linear-gradient(135deg, #1e3a5f, #0a1929)",
-    image: virtualConsultationImg,
-  },
-  {
-    title: "Smargo - Farm-to-Institution Marketplace",
-    type: "Web Development Project",
-    problem:
-      "Farmers often rely on middlemen who reduce their earnings, while institutions like schools and hospitals struggle to access fresh produce directly from reliable suppliers.",
-    solution:
-      "Built a responsive marketplace interface that connects farmers directly with institutions, focusing on clarity, usability, and smooth product browsing and ordering flow.",
-    tools: ["React", "TypeScript", "Vercel"],
-    outcome:
-      "Live deployed platform demonstrating real-world frontend development, UI structuring, and deployment of a functional marketplace interface.",
-    accent: "linear-gradient(135deg, #0f172a, #1e293b)",
-    image: smargoImg,
-    link: "https://smargo.vercel.app",
-  },
-  {
-    title: "S Mart",
-    type: "UI/UX Design Project",
-    problem:
-      "Designed a mobile grocery shopping experience that makes it easy for customers to browse products, discover special offers, and order everyday essentials.",
-    solution:
-      "Designed a complete mobile shopping experience in Figma, including user flows, wireframes, high-fidelity screens, and an interactive prototype focused on simplicity and usability.",
-    tools: ["Figma", "UI Design", "UX Design", "Prototyping"],
-    outcome:
-      "Created a modern grocery shopping app prototype with intuitive navigation, product browsing, promotions, and a streamlined shopping experience.",
-    accent: "linear-gradient(135deg, #4CAF50, #2E7D32)",
-    image: smartImg,
-    link: "https://www.figma.com/proto/2DaNeg6c0ujjkAvPKUCtOt/Smart-App?node-id=61-61&t=OrQQHqf2bCYb9PeB-1",
-  },
-  {
-    title: "AI Customer Assistant - Demo",
-    type: "React + AI Project",
-    problem:
-      "Service businesses repeat the same 20 questions all day - pricing, hours, location, booking.",
-    solution:
-      "Embeddable chat widget powered by an LLM, trained on a business FAQ, with email and Calendly handoff.",
-    tools: ["React", "OpenAI API", "Node.js", "TypeScript"],
-    outcome:
-      "Working demo answers 80% of common questions instantly. Deployable to any site in minutes.",
-    accent: "linear-gradient(135deg, #4a2d5f, #1a0f2a)",
-    image: aireactImg,
-  },
-];
 const steps = [
   {
     num: "01",
@@ -261,29 +200,6 @@ const steps = [
     num: "05",
     title: "Launch",
     desc: "We deploy your project, run final checks, and hand it over — with 30 days of support after.",
-  },
-];
-const team = [
-  {
-    name: "Caroline Nyawira",
-    role: "Founder & CEO",
-    speciality: "Product Strategy · Software Engineering · Creative Direction",
-    bio: "Caroline founded and leads Kavaro, setting the studio's vision and overseeing every product from first concept to launch. She works directly with clients to turn ideas into real digital products, bridging business, design, and engineering, and reviewing quality across every stage of the process.",
-    image: carolineImg,
-  },
-  {
-    name: "Hezron Sande",
-    role: "Full-Stack Software Engineer",
-    speciality: "Full-Stack Development · React & Node.js",
-    bio: "Builds the reliable systems behind every product Kavaro ships — equally at home on the frontend or backend, wherever a project needs the most attention.",
-    image: hezronImg,
-  },
-  {
-    name: "Brenda Chebet",
-    role: "Product Designer",
-    speciality: "UI/UX Design · Frontend Development",
-    bio: "Turns research and design into interfaces that are responsive, accessible, and genuinely easy to use — the kind of small details that make a product feel considered, not just finished.",
-    image: brendaImg,
   },
 ];
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/hello-kavaro";
@@ -418,7 +334,7 @@ function Home() {
         </p>
 
         <div className={styles.projGrid}>
-          {projects.map((p) => (
+          {projects.slice(0, 2).map((p) => (
             <article className={styles.projCard} key={p.title}>
               <div className={styles.projHero} style={{ background: p.accent }}>
                 <span className={styles.projType}>{p.type}</span>
@@ -466,8 +382,13 @@ function Home() {
         </div>
         <p className={styles.projNote}>
           Each of these started as a real problem worth solving — the same process we bring to every
-          client engagement. If yours is next, we're ready.
+          client engagement.
         </p>
+        <div style={{ textAlign: "center", marginTop: 24 }}>
+          <Link to="/work" className="btn-secondary">
+            View All Work
+          </Link>
+        </div>
       </section>
 
       {/* 4. WHY KAVARO */}
@@ -542,7 +463,7 @@ function Home() {
           />
           <div className={styles.vmFounder}>
             <strong>Kavaro</strong>
-            <span>Founder · Software Engineer · Creative Director</span>
+            <span>Founder & Software Engineer · Creative Director</span>
           </div>
         </div>
         <div className={styles.vmCards}>
@@ -552,32 +473,16 @@ function Home() {
           </h2>
 
           <p className={styles.storyP}>
-            <strong>The problem.</strong> Our founder's father was a dialysis patient. For years,
-            she watched him make unnecessary trips to the hospital just to book appointments, ask
-            simple questions, refill prescriptions, or confirm test results — tasks that could have
-            taken minutes online. His clinic, like many essential services, had little or no digital
-            presence.
+            <strong>{storyParagraphs[0].label}</strong> {storyParagraphs[0].text}
           </p>
 
           <p className={styles.storyP}>
-            <strong>The realization.</strong> That experience pointed to a much bigger problem: too
-            many businesses and organizations were still hard to reach because they lacked modern
-            digital tools — not because they didn't want to change, but because building them felt
-            out of reach.
+            <strong>{storyParagraphs[1].label}</strong> {storyParagraphs[1].text}
           </p>
 
-          <p className={styles.storyP}>
-            <strong>The mission.</strong> He has since passed on, but the gap he experienced still
-            affects many families today. Kavaro exists in his memory — to help organizations build
-            accessible, reliable, and user-friendly digital experiences, one honest website at a
-            time.
-          </p>
-
-          <p className={styles.storyP}>
-            <strong>The impact.</strong> We are a remote team of designers and engineers based in
-            Kenya, combining UI/UX design, software engineering, cybersecurity, and generative AI to
-            build products that save people time and make essential services easier to reach.
-          </p>
+          <Link to="/about" className="btn-secondary">
+            Read Our Full Story
+          </Link>
         </div>
       </section>
 
@@ -588,19 +493,11 @@ function Home() {
         <div className={styles.whyGrid}>
           <div className={styles.vmCard}>
             <h3>Our Vision</h3>
-            <p>
-              A world where every growing business — from a Nairobi clinic to a global startup — has
-              access to reliable, user-friendly digital experiences that help them serve their
-              customers better.
-            </p>
+            <p>{visionMission.vision}</p>
           </div>
           <div className={styles.vmCard}>
             <h3>Our Mission</h3>
-            <p>
-              To design and build modern websites, web applications, and digital tools that help
-              growing businesses connect with customers, operate better, and grow online through
-              thoughtful design and reliable engineering.
-            </p>
+            <p>{visionMission.mission}</p>
           </div>
         </div>
       </section>
